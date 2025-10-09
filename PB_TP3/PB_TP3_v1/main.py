@@ -1,3 +1,3 @@
 from funcoes_caixa import *
 
-abrir_caixa()
+abrir_sistema_supermercado()

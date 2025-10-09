@@ -1,9 +1,26 @@
 import os.path
 from util import *
+from datetime import *
+
 
 ARQ = "produtos.csv"
 DIR = os.path.dirname(os.path.abspath(__file__))
 ARQ = os.path.join(DIR, ARQ)
+
+def create_produto():
+    '''
+    Cria um novo produto.
+    ID | Nome | Quantidade | Preço  
+    '''
+
+    print("Criar produto:")
+    id = datetime.now().strftime("%Y%m%d%H%M%S%f")
+    nome = input("Nome: ")
+    quantidade = input_int_positivo("Quantidade: ")
+    preco = input_float_positivo("Preço: ")
+    produto = [id, nome, quantidade, preco]
+    print("Produto criado com sucesso!")
+    return produto
 
 def insert_produto(produto):
     try:
@@ -24,6 +41,14 @@ def return_produto(produto_id):
                     produto_encontrado = produto
                     break
             return produto_encontrado
+    except Exception as e:
+        print("Erro:", e)
+
+def return_produtos():
+    try:
+        with open(ARQ, "r", encoding="utf-8") as arquivo:
+            produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
+            return produtos
     except Exception as e:
         print("Erro:", e)
 

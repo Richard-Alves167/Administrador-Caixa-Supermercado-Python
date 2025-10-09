@@ -1,10 +1,11 @@
 from util import *
 from crud_produtos import *
+from funcoes_atendimento import *
 
 def menu_caixa():
     print('''
     ==============================
-    = Menu do Caixa Supermercado =
+    =  Menu Sistema Supermercado =
     ==============================
     = 0 - Visualizar MENU        =
     ------------------------------
@@ -18,14 +19,11 @@ def menu_caixa():
     ------------------------------
     = 5 - Deletar Produto        =
     ------------------------------
-    = 6 - Iniciar Atendimento    =
+    = 6 - Abrir Caixa            =
     ------------------------------
-    = 7 - Fechar Caixa           =
+    = 7 - Fechar Sistema         =
     ==============================
     ''')
-
-def fechar_caixa():
-    print("Desligando sistema...")
 
 def visualizar_produto():
     produto_id = input("Digite o ID do produto: ")
@@ -38,18 +36,21 @@ def adicionar_produto():
     produto = create_produto()
     insert_produto(produto)
 
+def menu_modificar_produto():
+    print('''
+    ==============================
+    =     Menu de Modificação    =
+    ==============================
+    = 1 - Modificar Preço        =
+    ------------------------------
+    = 2 - Modificar Quantidade   =
+    ==============================
+    ''')
+
 def modificar_produto():
     produto_id = input("Digite o ID do produto a ser modificado: ")
     if (not return_produto(produto_id) == None):
-        print('''
-        ==============================
-        =     Menu de Modificação    =
-        ==============================
-        = 1 - Modificar Preço        =
-        ------------------------------
-        = 2 - Modificar Quantidade   =
-        ==============================
-        ''')
+        menu_modificar_produto()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 1:
@@ -65,9 +66,8 @@ def deletar_produto():
     produto_id = input("Digite o ID do produto a ser deletado: ")
     delete_produto(produto_id)
 
-def atender_cliente():
-    print("Iniciando atendimento...")
-
+def desligar_sistema():
+    print("Desligando sistema...")
 
 def selecionar_opcao():
     while(True):
@@ -86,14 +86,14 @@ def selecionar_opcao():
             case 5:
                 deletar_produto()
             case 6:
-                atender_cliente()
+                abrir_caixa()
             case 7:
-                fechar_caixa()
+                desligar_sistema()
                 break
             case _:
                 print("Opção inválida!")
 
-def abrir_caixa():
+def abrir_sistema_supermercado():
     print("Inicializando sistema...")
     menu_caixa()
     selecionar_opcao()
