@@ -5,21 +5,6 @@ def menu_caixa():
     ==============================
     = 0 - Visualizar MENU        =
     ------------------------------
-    = 1 - Acessar Adiministração =
-    ------------------------------
-    = 2 - Abrir Caixa            =
-    ------------------------------
-    = 3 - Fechar Sistema         =
-    ==============================
-    ''')
-
-def menu_administracao():
-    print('''
-    ==============================
-    =     Menu Administração     =
-    ==============================
-    = 0 - Visualizar MENU        =
-    ------------------------------
     = 1 - Visualizar Produtos    =
     ------------------------------
     = 2 - Visualizar Um Produto  =
@@ -30,7 +15,9 @@ def menu_administracao():
     ------------------------------
     = 5 - Deletar Produto        =
     ------------------------------
-    = 6 - Sair do Sistema ADM    =
+    = 6 - Abrir Caixa            =
+    ------------------------------
+    = 7 - Fechar Sistema         =
     ==============================
     ''')
 

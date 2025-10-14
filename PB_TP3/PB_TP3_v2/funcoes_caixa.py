@@ -36,36 +36,7 @@ def deletar_produto():
 def desligar_sistema():
     print("Desligando sistema...")
 
-def selecionar_opcao_caixa():
-    while(True):
-        opcao = input_int("Selecione uma opção: ")
-        match opcao:
-            case 0:
-                menu_caixa()
-            case 1:
-                acessar_area_administrador()
-            case 2:
-                abrir_caixa()
-            case 3:
-                desligar_sistema()
-                break
-            case _:
-                print("Opção inválida!")
-
-def acessar_area_administrador():
-    senha = input("Digite a senha de administrador: ")
-    if (senha == "admin123"):
-        print("Acesso concedido!")
-        print("Entrando no sistema operacional de estoque...")
-        selecionar_opcao_administracao()
-    else:
-        print("Senha incorreta!")
-
-def sair_sistema_administrador():
-    print("Saindo do sistema operacional de estoque...")
-
-def selecionar_opcao_administracao():
-    menu_administracao()
+def selecionar_opcao():
     while(True):
         opcao = input_int("Selecione uma opção: ")
         match opcao:
@@ -82,7 +53,9 @@ def selecionar_opcao_administracao():
             case 5:
                 deletar_produto()
             case 6:
-                sair_sistema_administrador()
+                abrir_caixa()
+            case 7:
+                desligar_sistema()
                 break
             case _:
                 print("Opção inválida!")
@@ -90,5 +63,5 @@ def selecionar_opcao_administracao():
 def abrir_sistema_supermercado():
     print("Inicializando sistema...")
     menu_caixa()
-    selecionar_opcao_caixa()
+    selecionar_opcao()
     print("Sistema finalizado")
