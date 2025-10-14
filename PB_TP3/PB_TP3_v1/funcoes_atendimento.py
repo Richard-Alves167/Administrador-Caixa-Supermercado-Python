@@ -1,18 +1,8 @@
 from util import *
 from crud_produtos import *
 from crud_atendimentos import *
+from menus import *
 from tabulate import tabulate
-
-def menu_atendimento():
-    print('''
-    ==============================
-    =  Menu de Caixa Atendimento =
-    ==============================
-    = 1 - Iniciar Atendimento    =
-    ------------------------------
-    = 2 - Finalizar Atendimentos =
-    ==============================
-    ''')
 
 def visualizar_atendimentos():
     lista_atendimentos = return_atendimentos()

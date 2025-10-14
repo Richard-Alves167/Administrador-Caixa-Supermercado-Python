@@ -1,29 +1,7 @@
 from util import *
 from crud_produtos import *
 from funcoes_atendimento import *
-
-def menu_caixa():
-    print('''
-    ==============================
-    =  Menu Sistema Supermercado =
-    ==============================
-    = 0 - Visualizar MENU        =
-    ------------------------------
-    = 1 - Visualizar Produtos    =
-    ------------------------------
-    = 2 - Visualizar Um Produto  =
-    ------------------------------
-    = 3 - Adicionar Produto      =
-    ------------------------------
-    = 4 - Modificar Produto      =
-    ------------------------------
-    = 5 - Deletar Produto        =
-    ------------------------------
-    = 6 - Abrir Caixa            =
-    ------------------------------
-    = 7 - Fechar Sistema         =
-    ==============================
-    ''')
+from menus import *
 
 def visualizar_produto():
     produto_id = input("Digite o ID do produto: ")
@@ -35,17 +13,6 @@ def visualizar_produtos():
 def adicionar_produto():
     produto = create_produto()
     insert_produto(produto)
-
-def menu_modificar_produto():
-    print('''
-    ==============================
-    =     Menu de Modificação    =
-    ==============================
-    = 1 - Modificar Preço        =
-    ------------------------------
-    = 2 - Modificar Quantidade   =
-    ==============================
-    ''')
 
 def modificar_produto():
     produto_id = input("Digite o ID do produto a ser modificado: ")

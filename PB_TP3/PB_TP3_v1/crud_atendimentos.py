@@ -1,6 +1,7 @@
 from util import *
 from crud_produtos import *
 from datetime import *
+from menus import *
 
 lista_produtos = return_produtos()
 lista_atendimentos = []
@@ -33,17 +34,6 @@ def create_atendimento():
 def insert_atendimento(atendimento):
     lista_atendimentos.append(atendimento)
     print("Atendimento finalizado com sucesso!")
-
-def menu_compra():
-    print('''
-    ==============================
-    =      Menu de Compra        =
-    ==============================
-    = 1 - Adicionar Produto      =
-    ------------------------------
-    = 2 - Finalizar Compra       =
-    ==============================
-    ''')
 
 def adicionar_produto_carrinho():
     produto_id = input("Digite o ID do produto a ser adicionado: ")
