@@ -4,19 +4,13 @@ from crud_atendimentos import *
 from menus import *
 from tabulate import tabulate
 
-def visualizar_atendimentos():
-    lista_atendimentos = return_atendimentos()
-    print("========== Lista de Atendimentos ==========\n")
-    cabecalho = ["Nome", "Idade", "Profissão"]
-    print(tabulate(lista_atendimentos, headers=cabecalho))
-
 def atender_cliente():
     atendimento = create_atendimento()
     if (not atendimento[2] == []):
-        insert_atendimento(atendimento)
-        emitir_nota_fiscal(atendimento)
+        return atendimento
     else: 
         print("Erro: Atendimento/Carrinho sem produtos...")
+        return None
 
 def emitir_nota_fiscal(atendimento):
     cliente = atendimento[0]
@@ -39,14 +33,19 @@ def emitir_nota_fiscal(atendimento):
     print(f"Total: {total:.2f}")
 
 def abrir_caixa():
+    lista_atendimentos = []
     while(True):
         menu_atendimento()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 1:
-                atender_cliente()
+                atendimento = atender_cliente()
+                if (not atendimento == None):
+                    atendimento[0] = len(lista_atendimentos) + 1
+                    emitir_nota_fiscal(atendimento)
+                    lista_atendimentos.append(atendimento)
             case 2:
-                fechar_caixa()
+                fechar_caixa(lista_atendimentos)
                 break
             case _:
                 print("Opção inválida!")
@@ -73,17 +72,14 @@ def verificar_produtos_indisponiveis():
     lista_produtos = return_produtos()
     produtos_indisponiveis = [produto for produto in lista_produtos if int(produto[2]) == 0]
     if (not produtos_indisponiveis == []):
-        print("Produtos sem estoque:")
+        print("\nProdutos sem estoque:")
         for produto in produtos_indisponiveis:
             print(produto[1])
     else:
         print("Todos os produtos estão com estoque disponível.")
 
 
-def fechar_caixa():
-    lista_clientes = return_atendimentos()
-    emitir_nota_clientes_atendidos(lista_clientes)
-    lista_produtos = return_estoque_atual()
-    update_estoque(lista_produtos)
+def fechar_caixa(lista_atendimentos):
+    emitir_nota_clientes_atendidos(lista_atendimentos)
     verificar_produtos_indisponiveis()
-    print("Caixa fechado com sucesso!")
+    print("\nCaixa fechado com sucesso!\n")
