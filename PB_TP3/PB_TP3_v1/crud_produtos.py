@@ -3,9 +3,12 @@ from util import *
 from datetime import *
 
 
-ARQ = "produtos.csv"
-DIR = os.path.dirname(os.path.abspath(__file__))
-ARQ = os.path.join(DIR, ARQ)
+def caminho_arquivo():
+    ARQ = "produtos.csv"
+    DIR = os.path.dirname(os.path.abspath(__file__))
+    ARQ = os.path.join(DIR, ARQ)
+    return ARQ
+
 
 def create_produto():
     '''
@@ -24,7 +27,7 @@ def create_produto():
 
 def insert_produto(produto):
     try:
-        with open(ARQ, "a", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "a", encoding="utf-8") as arquivo:
             linha = ",".join(map(str, produto)) + "\n"
             arquivo.write(linha)
             print("Produto inserido com sucesso!")
@@ -33,7 +36,7 @@ def insert_produto(produto):
 
 def return_produto(produto_id):
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             produto_encontrado = None
             for produto in produtos:
@@ -46,7 +49,7 @@ def return_produto(produto_id):
 
 def return_produtos():
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             return produtos
     except Exception as e:
@@ -55,7 +58,7 @@ def return_produtos():
 def read_produto(produto_id):
     print("Procurar produto de ID:", produto_id)
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             produto_encontrado = None
             for produto in produtos:
@@ -72,7 +75,7 @@ def read_produto(produto_id):
 def read_produtos():
     print("Listar produtos")
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
         for produto in produtos:
             print(produto)
@@ -81,7 +84,7 @@ def read_produtos():
 
 def update_produto_preco(produto_id):
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             linha_arquivo = 0
             produto_encontrado = None
@@ -93,7 +96,7 @@ def update_produto_preco(produto_id):
             if produto_encontrado:
                 novo_preco = input_float_positivo("Novo preço: ")
                 produtos[linha_arquivo][3] = novo_preco
-                with open(ARQ, "w", encoding="utf-8") as arquivo:
+                with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
                     for produto in produtos:
                         linha = ",".join(map(str, produto)) + "\n"
                         arquivo.write(linha)
@@ -105,7 +108,7 @@ def update_produto_preco(produto_id):
 
 def update_produto_quantidade(produto_id):
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             linha_arquivo = 0
             produto_encontrado = None
@@ -117,7 +120,7 @@ def update_produto_quantidade(produto_id):
             if produto_encontrado:
                 nova_quantidade = input_int_positivo("Nova quantidade no estoque: ")
                 produtos[linha_arquivo][2] = nova_quantidade
-                with open(ARQ, "w", encoding="utf-8") as arquivo:
+                with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
                     for produto in produtos:
                         linha = ",".join(map(str, produto)) + "\n"
                         arquivo.write(linha)
@@ -129,7 +132,7 @@ def update_produto_quantidade(produto_id):
 
 def delete_produto(produto_id):
     try:
-        with open(ARQ, "r", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
             produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
             linha_arquivo = 0
             produto_encontrado = None
@@ -140,7 +143,7 @@ def delete_produto(produto_id):
                     break
             if produto_encontrado:
                 produtos.pop(linha_arquivo)
-                with open(ARQ, "w", encoding="utf-8") as arquivo:
+                with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
                     for produto in produtos:
                         linha = ",".join(map(str, produto)) + "\n"
                         arquivo.write(linha)
@@ -152,7 +155,7 @@ def delete_produto(produto_id):
 
 def update_estoque(lista_produtos):
     try:
-        with open(ARQ, "w", encoding="utf-8") as arquivo:
+        with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
             for produto in lista_produtos:
                 linha = ",".join(map(str, produto)) + "\n"
                 arquivo.write(linha)
