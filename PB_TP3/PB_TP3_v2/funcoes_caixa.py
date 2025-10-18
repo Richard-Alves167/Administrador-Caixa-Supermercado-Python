@@ -70,7 +70,7 @@ def selecionar_opcao_administracao():
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 0:
-                menu_caixa()
+                menu_administracao()
             case 1:
                 visualizar_produtos()
             case 2:
