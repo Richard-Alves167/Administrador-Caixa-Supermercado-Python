@@ -27,7 +27,7 @@ def create_atendimento():
                         if (int(produto[2]) >= quantidade):
                             lista_produtos[index][2] = int(produto[2]) - quantidade
                             preco_total = quantidade * float(produto[3])
-                            produto_comprado = [produto[1], quantidade, produto[3], preco_total]
+                            produto_comprado = [produto[0], produto[1], quantidade, produto[3], preco_total]
                             produtos_comprados.append(produto_comprado)
                             break
                         else:

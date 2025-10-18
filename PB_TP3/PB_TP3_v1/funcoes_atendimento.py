@@ -19,8 +19,8 @@ def emitir_nota_fiscal(atendimento):
     total = 0
     produtos = []
     for item in atendimento[2]:
-        produtos.append([contador, item[0], item[1], item[2], item[3]])
-        total += item[3]
+        produtos.append([contador, item[1], item[2], item[3], item[4]])
+        total += item[4]
         contador += 1
 
     print(f"CLiente {cliente}")
@@ -29,7 +29,7 @@ def emitir_nota_fiscal(atendimento):
     cabecalho = ["Item", "Produto", "Quant."," Preço", "Total"]
     print(tabulate(produtos, headers=cabecalho))
     print()
-    print(f"Itens: {contador}")
+    print(f"Itens: {len(produtos)}")
     print(f"Total: {total:.2f}")
 
 def abrir_caixa():
@@ -55,7 +55,7 @@ def emitir_nota_clientes_atendidos(lista_clientes):
     lista_clientes_separados = []
     for cliente in lista_clientes:
         nome_cliente = f"Cliente {cliente[0]}"
-        total_cliente = sum([produto[3] for produto in cliente[2]])
+        total_cliente = sum([produto[4] for produto in cliente[2]])
         lista_clientes_separados.append([nome_cliente, total_cliente])
     total = sum([cliente[1] for cliente in lista_clientes_separados])
 

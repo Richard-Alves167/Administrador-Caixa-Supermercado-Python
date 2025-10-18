@@ -25,7 +25,7 @@ def create_atendimento():
                         if (int(produto_encontrado[2]) >= quantidade):
                             dic_produtos[produto_encontrado[0]][2] = int(produto_encontrado[2]) - quantidade
                             preco_total = quantidade * float(produto_encontrado[3])
-                            produto_comprado = [produto_encontrado[1], quantidade, produto_encontrado[3], preco_total]
+                            produto_comprado = [produto_encontrado[0], produto_encontrado[1], quantidade, produto_encontrado[3], preco_total]
                             produtos_comprados.append(produto_comprado)
                         else:
                             print("Quantidade indisponível no estoque!")
