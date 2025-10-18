@@ -60,7 +60,7 @@ def emitir_nota_clientes_atendidos(lista_clientes):
     total = sum([cliente[1] for cliente in lista_clientes_separados])
 
     data = datetime.now().strftime("%d/%m/%Y %H:%M")
-    print("Fechamento do caixa")
+    print("Fechamento do caixa\n")
     print(f"Data: {data}")
     print()
     cabecalho = ["Cliente", "Total"]
@@ -69,8 +69,12 @@ def emitir_nota_clientes_atendidos(lista_clientes):
     print(f"Total: {total:.2f}")
 
 def verificar_produtos_indisponiveis():
-    lista_produtos = return_produtos()
-    produtos_indisponiveis = [produto for produto in lista_produtos if int(produto[2]) == 0]
+    dic_produtos = return_produtos()
+    produtos_indisponiveis = []
+    for index_dic in dic_produtos:
+        produto = dic_produtos[index_dic]
+        if int(produto[2]) == 0:
+            produtos_indisponiveis.append(produto)
     if (not produtos_indisponiveis == []):
         print("\nProdutos sem estoque:")
         for produto in produtos_indisponiveis:

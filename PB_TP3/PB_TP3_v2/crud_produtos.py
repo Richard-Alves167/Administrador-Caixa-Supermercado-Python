@@ -50,7 +50,10 @@ def return_produto(produto_id):
 def return_produtos():
     try:
         with open(caminho_arquivo(), "r", encoding="utf-8") as arquivo:
-            produtos = [linha.strip().split(",") for linha in arquivo.readlines()]
+            produtos = {}
+            for linha in arquivo.readlines():
+                produto_array = linha.strip().split(",")
+                produtos[produto_array[0]] = produto_array
             return produtos
     except Exception as e:
         print("Erro:", e)
@@ -153,12 +156,13 @@ def delete_produto(produto_id):
     except Exception as e:
         print("Erro:", e)
 
-def update_estoque(lista_produtos):
+def update_estoque(dic_produtos):
     try:
         with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
-            for produto in lista_produtos:
+            for index_dic in dic_produtos:
+                produto = dic_produtos[index_dic]
                 linha = ",".join(map(str, produto)) + "\n"
                 arquivo.write(linha)
-            print("Estoque atualizado com sucesso!")
+        print("Estoque atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)

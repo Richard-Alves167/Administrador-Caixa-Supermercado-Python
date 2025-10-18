@@ -34,7 +34,7 @@ def create_atendimento():
                             print("Quantidade indisponível no estoque!")
                             break
                 if (produto_encontrado == None):
-                    print("Produto não encontrado!")
+                    print("Erro: produto não cadastrado.")
             case 2:
                 break
             case _:

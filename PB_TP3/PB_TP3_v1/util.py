@@ -14,7 +14,7 @@ def input_int_positivo(msg):
         try:
             valor = int(input(msg))
             if (valor <= 0):
-                raise ValueError("Error: número negativo")
+                raise ValueError("“Erro: quantidade deve ser maior que zero.")
             parar_loop = True
         except:
             print("Valor inválido!\nTente novamente...")
