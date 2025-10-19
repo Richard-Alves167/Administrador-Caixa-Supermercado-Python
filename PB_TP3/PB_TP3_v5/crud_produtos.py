@@ -123,17 +123,14 @@ def delete_produto(produto_id):
         desconectar(session)
 
 def update_estoque(dic_produtos):
-    comando = "update produto set quantidade = ? where id = ?;"
-
     try:
-        conn = conectar()
-        cursor = conn.cursor()
+        session = conectar()
         for index_dic in dic_produtos:
             produto = dic_produtos[index_dic]
-            cursor.execute(comando, (produto.quantidade, produto.id))
-        conn.commit()
+            session.query(Produto).filter(Produto.id == produto.id).update({"quantidade": produto.quantidade})
+        session.commit()
         print("Estoque atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)
     finally:
-        desconectar(conn)
+        desconectar(session)

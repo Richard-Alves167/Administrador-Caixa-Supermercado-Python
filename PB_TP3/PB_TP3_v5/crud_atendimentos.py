@@ -23,7 +23,7 @@ def adicionar_carrinho():
         menu_compra()
         match input_int("Selecione uma opção: "):
             case 1:
-                produto_id = input_int_positivo("Digite o ID do produto a ser adicionado: ")
+                produto_id = input("Digite o ID do produto a ser adicionado: ")
                 produto_encontrado = dic_produtos.get(produto_id)
                 if produto_encontrado:
                         quantidade = input_int_positivo("Quantidade: ")
