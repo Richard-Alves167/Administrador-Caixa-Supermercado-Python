@@ -1,4 +1,5 @@
 from util import *
+from util_db import *
 from crud_produtos import *
 from funcoes_atendimento import *
 from menus import *

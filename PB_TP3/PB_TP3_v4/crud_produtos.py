@@ -4,12 +4,6 @@ from datetime import *
 from models import Produto
 from conexao import conectar, desconectar
 
-def caminho_arquivo():
-    ARQ = "produtos.csv"
-    DIR = os.path.dirname(os.path.abspath(__file__))
-    ARQ = os.path.join(DIR, ARQ)
-    return ARQ
-
 def create_produto():
     '''
     Cria um novo produto.
@@ -159,63 +153,17 @@ def delete_produto(produto_id):
         desconectar(conn)
 
 def update_estoque(dic_produtos):
+    comando = "update produto set quantidade = ? where id = ?;"
+
     try:
-        with open(caminho_arquivo(), "w", encoding="utf-8") as arquivo:
-            for index_dic in dic_produtos:
-                produto = dic_produtos[index_dic]
-                linha = str(produto) + "\n"
-                arquivo.write(linha)
+        conn = conectar()
+        cursor = conn.cursor()
+        for index_dic in dic_produtos:
+            produto = dic_produtos[index_dic]
+            cursor.execute(comando, (produto.quantidade, produto.id))
+        conn.commit()
         print("Estoque atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)
-
-def criar_tabela():
-    comando = """
-    CREATE TABLE IF NOT EXISTS produto (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        quantidade INTEGER NOT NULL,
-        preco REAL NOT NULL
-    );
-    """
-    try:
-        conn = conectar()
-        cursor = conn.cursor()
-        cursor.execute(comando)
-        conn.commit()
-    except Exception as e:
-        print("Erro ao criar tabela:", e)
-    finally:
-        desconectar(conn)
-
-def resetar_tabela():
-    comando = "DROP TABLE IF EXISTS produto;"
-    try:
-        conn = conectar()
-        cursor = conn.cursor()
-        cursor.execute(comando)
-        conn.commit()
-        print("Tabela resetada com sucesso!")
-    except Exception as e:
-        print("Erro ao resetar tabela:", e)
-    finally:
-        desconectar(conn)
-
-def mocki_produtos():
-    produtos_mocki = [
-        ("1", "Pitaya", 100, 9.99),
-        ("2", "Uva", 30, 6.99),
-        ("3", "Melancia", 300, 18.99),
-        ("4", "Morango", 200, 4.99),
-        ("5", "Carambola", 0, 23.99)
-    ]
-    comando = "insert into produto (id, nome, quantidade, preco) values (?, ?, ?, ?);"
-    try:
-        conn = conectar()
-        cursor = conn.cursor()
-        cursor.executemany(comando, produtos_mocki)
-        conn.commit()
-    except Exception as e:
-        print("Erro ao inserir produtos mocki:", e)
     finally:
         desconectar(conn)
