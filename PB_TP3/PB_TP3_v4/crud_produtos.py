@@ -53,16 +53,16 @@ def return_produto(produto_id):
 
 def return_produtos():
     comando = "select * from produto;"
-    produtos = {}
+
+    produtos_dic = {}
     try:
         conn = conectar()
         cursor = conn.cursor()
         cursor.execute(comando)
         produtos = cursor.fetchall()
-        if produtos:
-            for produto in produtos:
-                produtos[produto[0]] = Produto(produto[0], produto[1], produto[2], produto[3])
-        return produtos
+        for produto in produtos:
+            produtos_dic[produto[0]] = Produto(produto[0], produto[1], produto[2], produto[3])
+        return produtos_dic
     except Exception as e:
         print("Erro:", e)
     finally:
