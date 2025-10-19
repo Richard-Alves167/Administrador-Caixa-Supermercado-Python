@@ -2,7 +2,7 @@ import os.path
 import sqlite3
 
 def caminho_arquivo():
-    BANCO = "./mercado.db"
+    BANCO = "./mercado.sql"
     DIR = os.path.dirname(os.path.abspath(__file__))
     ARQ = os.path.join(DIR, BANCO)
     return ARQ
