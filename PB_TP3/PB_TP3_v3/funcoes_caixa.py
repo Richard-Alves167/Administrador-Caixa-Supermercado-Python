@@ -4,7 +4,7 @@ from funcoes_atendimento import *
 from menus import *
 
 def visualizar_produto():
-    produto_id = input("Digite o ID do produto: ")
+    produto_id = input_int_positivo("Digite o ID do produto: ")
     read_produto(produto_id)
 
 def visualizar_produtos():
@@ -15,7 +15,7 @@ def adicionar_produto():
     insert_produto(produto)
 
 def modificar_produto():
-    produto_id = input("Digite o ID do produto a ser modificado: ")
+    produto_id = input_int_positivo("Digite o ID do produto a ser modificado: ")
     if (not return_produto(produto_id) == None):
         menu_modificar_produto()
         opcao = input_int("Selecione uma opção: ")
@@ -30,7 +30,7 @@ def modificar_produto():
         print("Produto não encontrado")
 
 def deletar_produto():
-    produto_id = input("Digite o ID do produto a ser deletado: ")
+    produto_id = input_int_positivo("Digite o ID do produto a ser deletado: ")
     delete_produto(produto_id)
 
 def desligar_sistema():

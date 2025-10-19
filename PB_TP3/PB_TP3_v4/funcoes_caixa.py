@@ -61,13 +61,19 @@ def acessar_area_administrador():
     else:
         print("Senha incorreta!")
 
+def resetar_estoque():
+    resetar_tabela()
+    criar_tabela()
+    mocki_produtos()
+    print("Estoque resetado com sucesso!")
+
 def sair_sistema_administrador():
     print("Saindo do sistema operacional de estoque...")
 
 def selecionar_opcao_administracao():
     menu_administracao()
     while(True):
-        opcao = input_int("Selecione uma opção: ")
+        opcao = input_int("\nSelecione uma opção: ")
         match opcao:
             case 0:
                 menu_administracao()
@@ -82,6 +88,8 @@ def selecionar_opcao_administracao():
             case 5:
                 deletar_produto()
             case 6:
+                resetar_estoque()
+            case 7:
                 sair_sistema_administrador()
                 break
             case _:
