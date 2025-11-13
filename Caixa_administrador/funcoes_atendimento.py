@@ -4,8 +4,8 @@ from crud_atendimentos import *
 from menus import *
 from tabulate import tabulate
 
-def atender_cliente():
-    atendimento = create_atendimento()
+def atender_cliente(session):
+    atendimento = create_atendimento(session)
     if (not atendimento[2] == []):
         return atendimento
     else: 
@@ -32,20 +32,20 @@ def emitir_nota_fiscal(atendimento):
     print(f"Itens: {len(produtos)}")
     print(f"Total: {total:.2f}")
 
-def abrir_caixa():
+def abrir_caixa(session):
     lista_atendimentos = []
     while(True):
         menu_atendimento()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 1:
-                atendimento = atender_cliente()
+                atendimento = atender_cliente(session)
                 if (not atendimento == None):
                     atendimento[0] = len(lista_atendimentos) + 1
                     emitir_nota_fiscal(atendimento)
                     lista_atendimentos.append(atendimento)
             case 2:
-                fechar_caixa(lista_atendimentos)
+                fechar_caixa(session, lista_atendimentos)
                 break
             case _:
                 print("Opção inválida!")
@@ -68,8 +68,8 @@ def emitir_nota_clientes_atendidos(lista_clientes):
     print()
     print(f"Total: {total:.2f}")
 
-def verificar_produtos_indisponiveis():
-    dic_produtos = return_produtos()
+def verificar_produtos_indisponiveis(session):
+    dic_produtos = return_produtos(session)
     produtos_indisponiveis = []
     for index_dic in dic_produtos:
         produto = dic_produtos[index_dic]
@@ -83,7 +83,7 @@ def verificar_produtos_indisponiveis():
         print("Todos os produtos estão com estoque disponível.")
 
 
-def fechar_caixa(lista_atendimentos):
+def fechar_caixa(session, lista_atendimentos):
     emitir_nota_clientes_atendidos(lista_atendimentos)
-    verificar_produtos_indisponiveis()
+    verificar_produtos_indisponiveis(session)
     print("\nCaixa fechado com sucesso!\n")

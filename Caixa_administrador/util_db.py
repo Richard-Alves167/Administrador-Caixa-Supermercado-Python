@@ -21,7 +21,7 @@ def resetar_tabela():
     except Exception as e:
         print("Erro ao resetar tabela:", e)
 
-def mocki_produtos():
+def mocki_produtos(session):
     produtos_mocki = [
         Produto(1, "Pitaya", 100, 9.99),
         Produto(2, "Uva", 30, 6.99),
@@ -30,10 +30,7 @@ def mocki_produtos():
         Produto(5, "Carambola", 0, 23.99)
     ]
     try:
-        session = conectar()
         session.add_all(produtos_mocki)
         session.commit()
     except Exception as e:
         print("Erro ao inserir produtos mocki:", e)
-    finally:
-        desconectar(session)

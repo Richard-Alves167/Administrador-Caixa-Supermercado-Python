@@ -19,21 +19,17 @@ def create_produto():
     print("Produto criado com sucesso!")
     return produto
 
-def insert_produto(produto):
+def insert_produto(session, produto):
     try:
-        session = conectar()
         session.add(produto)
         session.commit()
         print("Produto inserido com sucesso!")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def return_produto(produto_id):
+def return_produto(session, produto_id):
     produto_encontrado = None
     try:
-        session = conectar()
         produto = session.query(Produto).get(produto_id)
         if produto:
             produto_encontrado = produto
@@ -41,49 +37,37 @@ def return_produto(produto_id):
             print("Erro: produto não cadastrado.")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
     return produto_encontrado
 
-def return_produtos():
+def return_produtos(session):
     produtos_dic = {}
     try:
-        session = conectar()
         produtos = session.query(Produto).all()
         for produto in produtos:
             produtos_dic[produto.id] = produto
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
     return produtos_dic
 
-def read_produto(produto_id):
+def read_produto(session, produto_id):
     try:
-        session = conectar()
-        produto = return_produto(produto_id)
+        produto = return_produto(session, produto_id)
         if produto:
             print("Produto encontrado: ", produto)
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def read_produtos():
+def read_produtos(session):
     print("Listar produtos")
     try:
-        session = conectar()
-        produtos = session.query(Produto).all()
+        produtos = return_produtos(session)
         for produto in produtos:
-            print(produto)
+            print(f"{produtos[produto]}")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def update_produto_preco(produto_id):
+def update_produto_preco(session, produto_id):
     try:
-        session = conectar()
         produto = return_produto(produto_id)
         if produto:
             novo_preco = input_float_positivo("Novo preço: ")
@@ -92,12 +76,9 @@ def update_produto_preco(produto_id):
             print("Produto atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def update_produto_quantidade(produto_id):
+def update_produto_quantidade(session, produto_id):
     try:
-        session = conectar()
         produto = return_produto(produto_id)
         if produto:
             nova_quantidade = input_int_positivo("Nova quantidade no estoque: ")
@@ -106,25 +87,19 @@ def update_produto_quantidade(produto_id):
             print("Produto atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def delete_produto(produto_id):
+def delete_produto(session, produto_id):
     try:
-        session = conectar()
-        produto = return_produto(produto_id)
+        produto = return_produto(session, produto_id)
         if produto:
             session.delete(produto)
             session.commit()
             print("Produto deletado com sucesso!")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)
 
-def update_estoque(dic_produtos):
+def update_estoque(session, dic_produtos):
     try:
-        session = conectar()
         for index_dic in dic_produtos:
             produto = dic_produtos[index_dic]
             session.query(Produto).filter(Produto.id == produto.id).update({"quantidade": produto.quantidade})
@@ -132,5 +107,3 @@ def update_estoque(dic_produtos):
         print("Estoque atualizado com sucesso!")
     except Exception as e:
         print("Erro:", e)
-    finally:
-        desconectar(session)

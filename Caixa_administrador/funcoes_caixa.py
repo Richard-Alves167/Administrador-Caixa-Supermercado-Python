@@ -3,75 +3,76 @@ from util_db import *
 from crud_produtos import *
 from funcoes_atendimento import *
 from menus import *
+from conexao import conectar, desconectar
 
-def visualizar_produto():
+def visualizar_produto(session):
     produto_id = input("Digite o ID do produto: ")
-    read_produto(produto_id)
+    read_produto(session, produto_id)
 
-def visualizar_produtos():
-    read_produtos()
+def visualizar_produtos(session):
+    read_produtos(session)
 
-def adicionar_produto():
+def adicionar_produto(session):
     produto = create_produto()
-    insert_produto(produto)
+    insert_produto(session, produto)
 
-def modificar_produto():
+def modificar_produto(session):
     produto_id = input("Digite o ID do produto a ser modificado: ")
-    if (not return_produto(produto_id) == None):
+    if (not return_produto(session, produto_id) == None):
         menu_modificar_produto()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 1:
-                update_produto_preco(produto_id)
+                update_produto_preco(session, produto_id)
             case 2:
-                update_produto_quantidade(produto_id)
+                update_produto_quantidade(session, produto_id)
             case _:
                 print("Opção inválida!")
     else:
         print("Produto não encontrado")
 
-def deletar_produto():
+def deletar_produto(session):
     produto_id = input("Digite o ID do produto a ser deletado: ")
-    delete_produto(produto_id)
+    delete_produto(session, produto_id)
 
 def desligar_sistema():
     print("Desligando sistema...")
 
-def selecionar_opcao_caixa():
+def selecionar_opcao_caixa(session):
     while(True):
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 0:
                 menu_caixa()
             case 1:
-                acessar_area_administrador()
+                acessar_area_administrador(session)
             case 2:
-                abrir_caixa()
+                abrir_caixa(session)
             case 3:
                 desligar_sistema()
                 break
             case _:
                 print("Opção inválida!")
 
-def acessar_area_administrador():
+def acessar_area_administrador(session):
     senha = input("Digite a senha de administrador: ")
     if (senha == "admin123"):
         print("Acesso concedido!")
         print("Entrando no sistema operacional de estoque...")
-        selecionar_opcao_administracao()
+        selecionar_opcao_administracao(session)
     else:
         print("Senha incorreta!")
 
-def resetar_estoque():
+def resetar_estoque(session):
     resetar_tabela()
     criar_tabela()
-    mocki_produtos()
+    mocki_produtos(session)
     print("Estoque resetado com sucesso!")
 
 def sair_sistema_administrador():
     print("Saindo do sistema operacional de estoque...")
 
-def selecionar_opcao_administracao():
+def selecionar_opcao_administracao(session):
     menu_administracao()
     while(True):
         opcao = input_int("\nSelecione uma opção: ")
@@ -79,17 +80,17 @@ def selecionar_opcao_administracao():
             case 0:
                 menu_administracao()
             case 1:
-                visualizar_produtos()
+                visualizar_produtos(session)
             case 2:
-                visualizar_produto()
+                visualizar_produto(session)
             case 3:
-                adicionar_produto()
+                adicionar_produto(session)
             case 4:
-                modificar_produto()
+                modificar_produto(session)
             case 5:
-                deletar_produto()
+                deletar_produto(session)
             case 6:
-                resetar_estoque()
+                resetar_estoque(session)
             case 7:
                 sair_sistema_administrador()
                 break
@@ -98,6 +99,8 @@ def selecionar_opcao_administracao():
 
 def abrir_sistema_supermercado():
     print("Inicializando sistema...")
+    session = conectar()
     menu_caixa()
-    selecionar_opcao_caixa()
+    selecionar_opcao_caixa(session)
+    desconectar(session)
     print("Sistema finalizado")
