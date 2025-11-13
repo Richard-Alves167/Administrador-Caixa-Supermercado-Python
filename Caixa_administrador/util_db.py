@@ -23,11 +23,11 @@ def resetar_tabela():
 
 def mocki_produtos(session):
     produtos_mocki = [
-        Produto(1, "Pitaya", 100, 9.99),
-        Produto(2, "Uva", 30, 6.99),
-        Produto(3, "Melancia", 300, 18.99),
-        Produto(4, "Morango", 200, 4.99),
-        Produto(5, "Carambola", 0, 23.99)
+        Produto("Pitaya", 100, 9.99),
+        Produto("Uva", 30, 6.99),
+        Produto("Melancia", 300, 18.99),
+        Produto("Morango", 200, 4.99),
+        Produto("Carambola", 0, 23.99)
     ]
     try:
         session.add_all(produtos_mocki)

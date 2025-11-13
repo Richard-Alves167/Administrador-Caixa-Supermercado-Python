@@ -11,11 +11,10 @@ def create_produto():
     '''
 
     print("Criar produto:")
-    id = datetime.now().strftime("%Y%m%d%H%M%S%f")
     nome = input("Nome: ")
     quantidade = input_int_positivo("Quantidade: ")
     preco = input_float_positivo("Preço: ")
-    produto = Produto(id, nome, quantidade, preco)
+    produto = Produto(nome, quantidade, preco)
     print("Produto criado com sucesso!")
     return produto
 

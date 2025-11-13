@@ -6,13 +6,12 @@ class Produto(declarative_base()):
 
     __tablename__ = "produto"
 
-    id = Column(String, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String, nullable=False)
     quantidade = Column(Integer, nullable=False)
     preco = Column(Float, nullable=False)
 
-    def __init__(self, id, nome, quantidade, preco):
-        self.id = id
+    def __init__(self, nome, quantidade, preco):
         self.nome = nome
         self.quantidade = quantidade
         self.preco = preco
