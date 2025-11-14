@@ -1,2 +1,5 @@
 pip install tabulate
 pip install SQLAlchemy
+pip install pandas
+pip install bs4
+pip install lxml
