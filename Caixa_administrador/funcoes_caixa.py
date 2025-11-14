@@ -69,6 +69,14 @@ def resetar_estoque(session):
     mocki_produtos(session)
     print("Estoque resetado com sucesso!")
 
+def resetar_clientes(session):
+    deletar_arquivo_clientes()
+    mocki_arquivo_clientes()
+    resetar_tabela_cliente()
+    criar_tabela_cliente()
+    mocki_clientes(session)
+    print("Clientes resetados com sucesso!")
+
 def sair_sistema_administrador():
     print("Saindo do sistema operacional de estoque...")
 
@@ -92,6 +100,8 @@ def selecionar_opcao_administracao(session):
             case 6:
                 resetar_estoque(session)
             case 7:
+                resetar_clientes(session)
+            case 8:
                 sair_sistema_administrador()
                 break
             case _:

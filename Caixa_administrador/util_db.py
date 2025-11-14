@@ -57,3 +57,32 @@ def deletar_arquivo_clientes():
             print("Erro ao deletar arquivo de clientes:", e)
     else:
         print("Arquivo de clientes não encontrado.")
+
+def criar_tabela_cliente():
+    try:
+        engine = create_engine("sqlite:///" + caminho_arquivo())
+        if not engine.dialect.has_table(engine.connect(), "cliente"):
+            from models import Cliente
+            Cliente.__table__.create(bind=engine)
+            print("Tabela criada com sucesso!")
+    except Exception as e:
+        print("Erro ao criar tabela:", e)
+
+def resetar_tabela_cliente():
+    try:
+        engine = create_engine("sqlite:///" + caminho_arquivo())
+        if engine.dialect.has_table(engine.connect(), "cliente"):
+            Cliente.__table__.drop(engine)
+        print("Tabela resetada com sucesso!")
+    except Exception as e:
+        print("Erro ao resetar tabela:", e)
+
+def mocki_clientes(session):
+    dataframe_clientes = pd.read_json("Caixa_administrador/clientes.json")
+    try:
+        for nome_cliente in dataframe_clientes[0]:
+            cliente = Cliente(nome_cliente)
+            session.add(cliente)
+        session.commit()
+    except Exception as e:
+        print("Erro ao inserir clientes mocki:", e)   

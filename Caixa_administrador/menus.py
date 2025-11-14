@@ -32,7 +32,9 @@ def menu_administracao():
     ------------------------------
     = 6 - Resetar Estoque        =
     ------------------------------
-    = 7 - Sair do Sistema ADM    =
+    = 7 - Resetar Clientes       =
+    ------------------------------
+    = 8 - Sair do Sistema ADM    =
     ==============================
     ''')
 
