@@ -17,7 +17,7 @@ class Produto(declarative_base()):
         self.preco = preco
 
     def __str__(self):
-        return f"{self.id},{self.nome},{self.quantidade},{self.preco}"
+        return f"{self.nome};{self.quantidade};{self.preco}"
     
 class Cliente(declarative_base()):
     '''Classe que representa um cliente com ID e nome.'''
@@ -31,4 +31,4 @@ class Cliente(declarative_base()):
         self.nome = nome
 
     def __str__(self):
-        return f"{self.id_cliente},{self.nome}"
+        return f"{self.id_cliente};{self.nome}"

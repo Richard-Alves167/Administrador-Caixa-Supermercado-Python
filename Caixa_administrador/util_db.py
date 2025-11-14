@@ -1,9 +1,32 @@
 from sqlalchemy import create_engine
 from conexao import conectar, desconectar, caminho_arquivo
+from util_web_produtos import buscar_produtos_site
 from models import *
 import os
 import pandas as pd
 import json
+
+def mocki_arquivo_produtos():
+    lista_produtos = buscar_produtos_site()
+    try:
+        arquivo = open("Caixa_administrador/produtos.csv","w", encoding='utf-8')
+        arquivo.write("nome;quantidade;preco\n")
+        for produto in lista_produtos:
+            linha = f"{produto}\n"
+            arquivo.write(linha)
+        print("Arquivo de produtos criado com sucesso!")
+    except Exception as e:
+        print("Erro ao criar arquivo de produtos:", e)
+
+def deletar_arquivo_produtos():
+    if os.path.isfile("Caixa_administrador/produtos.csv"):
+        try:
+            os.remove("Caixa_administrador/produtos.csv")
+            print("Arquivo de produtos deletado com sucesso!")
+        except Exception as e:
+            print("Erro ao deletar arquivo de proutos:", e)
+    else:
+        print("Arquivo de produtos não encontrado.")
 
 def criar_tabela_produto():
     try:
@@ -25,15 +48,11 @@ def resetar_tabela_produto():
         print("Erro ao resetar tabela:", e)
 
 def mocki_produtos(session):
-    produtos_mocki = [
-        Produto("Pitaya", 100, 9.99),
-        Produto("Uva", 30, 6.99),
-        Produto("Melancia", 300, 18.99),
-        Produto("Morango", 200, 4.99),
-        Produto("Carambola", 0, 23.99)
-    ]
+    produtos_mocki = pd.read_csv("Caixa_administrador/produtos.csv",sep=";",skiprows=1).values.tolist()
     try:
-        session.add_all(produtos_mocki)
+        for produto in produtos_mocki:
+            produto = Produto(produto[0], int(produto[1]), float(produto[2]))
+            session.add(produto)
         session.commit()
     except Exception as e:
         print("Erro ao inserir produtos mocki:", e)
