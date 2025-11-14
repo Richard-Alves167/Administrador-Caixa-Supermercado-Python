@@ -64,8 +64,8 @@ def acessar_area_administrador(session):
         print("Senha incorreta!")
 
 def resetar_estoque(session):
-    resetar_tabela()
-    criar_tabela()
+    resetar_tabela_produto()
+    criar_tabela_produto()
     mocki_produtos(session)
     print("Estoque resetado com sucesso!")
 

@@ -31,4 +31,4 @@ class Cliente(declarative_base()):
         self.nome = nome
 
     def __str__(self):
-        return f"{self.id},{self.nome}"
+        return f"{self.id_cliente},{self.nome}"
