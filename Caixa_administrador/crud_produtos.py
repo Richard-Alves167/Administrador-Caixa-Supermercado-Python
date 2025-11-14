@@ -2,7 +2,6 @@ import os.path
 from util import *
 from datetime import *
 from models import Produto
-from conexao import conectar, desconectar
 
 def create_produto():
     '''
@@ -43,7 +42,7 @@ def return_produtos(session):
     try:
         produtos = session.query(Produto).all()
         for produto in produtos:
-            produtos_dic[produto.id] = produto
+            produtos_dic[produto.id_produto] = produto
     except Exception as e:
         print("Erro:", e)
     return produtos_dic

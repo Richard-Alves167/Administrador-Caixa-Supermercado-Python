@@ -1,6 +1,7 @@
 from util import *
 from crud_produtos import *
 from crud_atendimentos import *
+from crud_clientes import *
 from menus import *
 from tabulate import tabulate
 
@@ -33,6 +34,7 @@ def emitir_nota_fiscal(atendimento):
     print(f"Total: {total:.2f}")
 
 def abrir_caixa(session):
+    read_clientes(session)
     lista_atendimentos = []
     while(True):
         menu_atendimento()
@@ -49,7 +51,6 @@ def abrir_caixa(session):
                 break
             case _:
                 print("Opção inválida!")
-
 
 def emitir_nota_clientes_atendidos(lista_clientes):
     lista_clientes_separados = []

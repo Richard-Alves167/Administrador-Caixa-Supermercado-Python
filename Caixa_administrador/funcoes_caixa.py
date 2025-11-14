@@ -3,7 +3,6 @@ from util_db import *
 from crud_produtos import *
 from funcoes_atendimento import *
 from menus import *
-from conexao import conectar, desconectar
 
 def visualizar_produto(session):
     produto_id = input("Digite o ID do produto: ")
