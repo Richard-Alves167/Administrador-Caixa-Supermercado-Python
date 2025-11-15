@@ -24,10 +24,11 @@ class Cliente(declarative_base()):
 
     __tablename__ = "cliente"
 
-    id_cliente = Column(Integer, primary_key=True, autoincrement=True)
+    id_cliente = Column(Integer, primary_key=True)
     nome = Column(String, nullable=False)
 
-    def __init__(self, nome):
+    def __init__(self, id_cliente,nome):
+        self.id_cliente = id_cliente
         self.nome = nome
 
     def __str__(self):

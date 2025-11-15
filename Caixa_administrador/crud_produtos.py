@@ -60,7 +60,7 @@ def read_produtos(session):
     try:
         produtos = return_produtos(session)
         for produto in produtos:
-            print(f"{produtos[produto]}")
+            print(f"{produtos[produto].id_produto} - {produtos[produto]}")
     except Exception as e:
         print("Erro:", e)
 
@@ -69,7 +69,7 @@ def update_produto_preco(session, produto_id):
         produto = return_produto(produto_id)
         if produto:
             novo_preco = input_float_positivo("Novo preço: ")
-            session.query(Produto).filter(Produto.id == produto_id).update({"preco": novo_preco})
+            session.query(Produto).filter(Produto.id_produto == produto_id).update({"preco": novo_preco})
             session.commit()
             print("Produto atualizado com sucesso!")
     except Exception as e:
@@ -80,7 +80,7 @@ def update_produto_quantidade(session, produto_id):
         produto = return_produto(produto_id)
         if produto:
             nova_quantidade = input_int_positivo("Nova quantidade no estoque: ")
-            session.query(Produto).filter(Produto.id == produto_id).update({"quantidade": nova_quantidade})
+            session.query(Produto).filter(Produto.id_produto == produto_id).update({"quantidade": nova_quantidade})
             session.commit()
             print("Produto atualizado com sucesso!")
     except Exception as e:
@@ -100,7 +100,7 @@ def update_estoque(session, dic_produtos):
     try:
         for index_dic in dic_produtos:
             produto = dic_produtos[index_dic]
-            session.query(Produto).filter(Produto.id == produto.id).update({"quantidade": produto.quantidade})
+            session.query(Produto).filter(Produto.id_produto == produto.id_produto).update({"quantidade": produto.quantidade})
         session.commit()
         print("Estoque atualizado com sucesso!")
     except Exception as e:

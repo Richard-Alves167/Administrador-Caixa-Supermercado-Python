@@ -5,7 +5,7 @@ from crud_clientes import *
 from menus import *
 from tabulate import tabulate
 
-def atender_cliente(session):
+def atender_cliente(session):    
     atendimento = create_atendimento(session)
     if (not atendimento[2] == []):
         return atendimento
