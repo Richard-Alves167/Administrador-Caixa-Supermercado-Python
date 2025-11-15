@@ -4,6 +4,8 @@ from crud_atendimentos import *
 from crud_clientes import *
 from menus import *
 from tabulate import tabulate
+from util_tabela import agrupar_itens_carrinho
+import pandas as pd
 
 def escolher_cliente(session):
     id_cliente = input_int_positivo("Selecione o ID do cliente: ")
@@ -29,9 +31,8 @@ def emitir_nota_fiscal(atendimento):
     data = atendimento.data_criacao
     contador = 1
     total = 0
-    produtos = []
-    for item in atendimento.carrinho_produtos:
-        produtos.append([contador, item[1], item[2], item[3], item[4]])
+    itens_produto = agrupar_itens_carrinho(atendimento.carrinho_produtos)
+    for item in itens_produto:
         total += item[4]
         contador += 1
 
@@ -39,9 +40,9 @@ def emitir_nota_fiscal(atendimento):
     print(f"Data: {data}")
     print()
     cabecalho = ["Item", "Produto", "Quant."," Preço", "Total"]
-    print(tabulate(produtos, headers=cabecalho))
+    print(tabulate(itens_produto, headers=cabecalho))
     print()
-    print(f"Itens: {len(produtos)}")
+    print(f"Itens: {len(itens_produto)}")
     print(f"Total: {total:.2f}")
 
 def abrir_caixa(session):
