@@ -1,5 +1,6 @@
 from util import *
 from crud_produtos import *
+from models import Atendimento
 from datetime import *
 from menus import *
 
@@ -10,10 +11,9 @@ def create_atendimento(session, id_cliente):
     '''
 
     print("Criar atendimento:")
-    numero_cliente = id_cliente
     data = datetime.now().strftime("%d/%m/%Y %H:%M")
     produtos_comprados = adicionar_carrinho(session)
-    atendimento = [numero_cliente, data, produtos_comprados]
+    atendimento = Atendimento(id_cliente, data, produtos_comprados)
     return atendimento
 
 def adicionar_carrinho(session):

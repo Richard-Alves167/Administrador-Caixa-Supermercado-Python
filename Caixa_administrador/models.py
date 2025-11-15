@@ -37,3 +37,14 @@ class Cliente(declarative_base()):
 
     def __str__(self):
         return f"{self.id_cliente};{self.nome}"
+    
+class Atendimento():
+    '''Classe que representa um atendimento com número do cliente, data e hora, e lista de produtos comprados.'''
+
+    def __init__(self, id_cliente, data_criacao, carrinho_produtos):
+        self.id_cliente = id_cliente
+        self.data_criacao = data_criacao
+        self.carrinho_produtos = carrinho_produtos
+
+    def __str__(self):
+        return f"{self.id_cliente};{self.data_hora};{self.carrinho_produtos}"

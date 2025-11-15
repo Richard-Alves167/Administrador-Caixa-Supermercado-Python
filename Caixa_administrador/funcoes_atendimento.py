@@ -18,19 +18,19 @@ def escolher_cliente(session):
 def atender_cliente(session):
     id_cliente = escolher_cliente(session)
     atendimento = create_atendimento(session, id_cliente)
-    if (not atendimento[2] == []):
+    if (not atendimento.carrinho_produtos == []):
         return atendimento
     else: 
         print("Atendimento cancelado -> Carrinho sem produtos...")
         return None
 
 def emitir_nota_fiscal(atendimento):
-    cliente = atendimento[0]
-    data = atendimento[1]
+    cliente = atendimento.id_cliente
+    data = atendimento.data_criacao
     contador = 1
     total = 0
     produtos = []
-    for item in atendimento[2]:
+    for item in atendimento.carrinho_produtos:
         produtos.append([contador, item[1], item[2], item[3], item[4]])
         total += item[4]
         contador += 1
@@ -62,11 +62,11 @@ def abrir_caixa(session):
             case _:
                 print("Opção inválida!")
 
-def emitir_nota_clientes_atendidos(lista_clientes):
+def emitir_nota_clientes_atendidos(lista_atendimentos):
     lista_clientes_separados = []
-    for cliente in lista_clientes:
-        nome_cliente = f"Cliente {cliente[0]}"
-        total_cliente = sum([produto[4] for produto in cliente[2]])
+    for atendimento in lista_atendimentos:
+        nome_cliente = f"Cliente {atendimento.id_cliente}"
+        total_cliente = sum([item[4] for item in atendimento.carrinho_produtos])
         lista_clientes_separados.append([nome_cliente, total_cliente])
     total = sum([cliente[1] for cliente in lista_clientes_separados])
 
