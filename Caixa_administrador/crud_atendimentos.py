@@ -1,6 +1,7 @@
 from util import *
 from crud_produtos import *
 from models import Atendimento
+from util_tabela import agrupar_itens_carrinho
 from datetime import *
 from menus import *
 
@@ -40,5 +41,5 @@ def adicionar_carrinho(session):
                 break
             case _:
                 print("Opção inválida!")
-    update_estoque(session, dic_produtos)
-    return produtos_comprados
+    produtos_comprados_agrupados = agrupar_itens_carrinho(produtos_comprados)
+    return produtos_comprados_agrupados

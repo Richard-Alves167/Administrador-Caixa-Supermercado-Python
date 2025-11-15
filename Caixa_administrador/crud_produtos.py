@@ -96,11 +96,11 @@ def delete_produto(session, produto_id):
     except Exception as e:
         print("Erro:", e)
 
-def update_estoque(session, dic_produtos):
+def update_estoque(session, carrinho_produtos):
     try:
-        for index_dic in dic_produtos:
-            produto = dic_produtos[index_dic]
-            session.query(Produto).filter(Produto.id_produto == produto.id_produto).update({"quantidade": produto.quantidade})
+        for item in carrinho_produtos:
+            produto = session.query(Produto).get(item[0])
+            produto.quantidade - item[2]
         session.commit()
         print("Estoque atualizado com sucesso!")
     except Exception as e:

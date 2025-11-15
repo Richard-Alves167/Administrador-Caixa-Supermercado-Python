@@ -4,7 +4,6 @@ from crud_atendimentos import *
 from crud_clientes import *
 from menus import *
 from tabulate import tabulate
-from util_tabela import agrupar_itens_carrinho
 import pandas as pd
 
 def escolher_cliente(session):
@@ -31,7 +30,7 @@ def emitir_nota_fiscal(atendimento):
     data = atendimento.data_criacao
     contador = 1
     total = 0
-    itens_produto = agrupar_itens_carrinho(atendimento.carrinho_produtos)
+    itens_produto = atendimento.carrinho_produtos
     for item in itens_produto:
         total += item[4]
         contador += 1
@@ -55,6 +54,7 @@ def abrir_caixa(session):
             case 1:
                 atendimento = atender_cliente(session)
                 if (not atendimento == None):
+                    update_estoque(session, atendimento.carrinho_produtos)
                     emitir_nota_fiscal(atendimento)
                     lista_atendimentos.append(atendimento)
             case 2:

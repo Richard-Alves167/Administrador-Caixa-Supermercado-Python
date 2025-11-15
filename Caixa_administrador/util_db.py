@@ -48,7 +48,7 @@ def resetar_tabela_produto():
         print("Erro ao resetar tabela:", e)
 
 def mocki_produtos(session):
-    produtos_mocki = pd.read_csv("Caixa_administrador/produtos.csv",sep=";",skiprows=1).values.tolist()
+    produtos_mocki = pd.read_csv("Caixa_administrador/produtos.csv",sep=";").values.tolist()
     try:
         for produto in produtos_mocki:
             produto = Produto(produto[0], int(produto[1]), float(produto[2]))
