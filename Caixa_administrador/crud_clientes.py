@@ -1,13 +1,12 @@
 from models import Cliente
 from util import *
 
-def create_cliente():
+def create_cliente(id_cliente):
     '''
     Cria um novo cliente.
     ID | Nome 
     '''
     print("Cadastrando Cliente...")
-    id_cliente = input_int_positivo("ID do Cliente: ")
     nome = "Cliente"
     cliente = Cliente(id_cliente, nome)
     print("Cliente criado com sucesso!")

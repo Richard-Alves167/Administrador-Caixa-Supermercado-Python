@@ -28,8 +28,12 @@ class Cliente(declarative_base()):
     nome = Column(String, nullable=False)
 
     def __init__(self, id_cliente,nome):
+        tamanho_palavra_cliente = len("Cliente")
         self.id_cliente = id_cliente
-        self.nome = nome
+        if len(nome) > tamanho_palavra_cliente: 
+            self.nome = nome
+        else:
+            self.nome = nome + " " + str(id_cliente)
 
     def __str__(self):
         return f"{self.id_cliente};{self.nome}"

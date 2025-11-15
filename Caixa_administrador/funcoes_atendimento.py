@@ -5,12 +5,23 @@ from crud_clientes import *
 from menus import *
 from tabulate import tabulate
 
-def atender_cliente(session):    
+def escolher_cliente(session):
+    id_cliente = input_int_positivo("Selecione o ID do cliente: ")
+    cliente = return_cliente(session, id_cliente)
+    if not cliente:
+        cliente = create_cliente(id_cliente)
+        insert_cliente(session, cliente)
+        id_cliente = cliente.id_cliente
+    print(f"Cliente selecionado - {cliente.nome}")
+    return id_cliente
+
+def atender_cliente(session):
+    id_cliente = escolher_cliente(session)
     atendimento = create_atendimento(session)
     if (not atendimento[2] == []):
         return atendimento
     else: 
-        print("Erro: Atendimento/Carrinho sem produtos...")
+        print("Atendimento cancelado -> Carrinho sem produtos...")
         return None
 
 def emitir_nota_fiscal(atendimento):

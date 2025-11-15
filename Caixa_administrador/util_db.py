@@ -99,8 +99,9 @@ def resetar_tabela_cliente():
 def mocki_clientes(session):
     dataframe_clientes = pd.read_json("Caixa_administrador/clientes.json")
     try:
-        for nome_cliente in dataframe_clientes[0]:
-            cliente = Cliente(nome_cliente)
+        for cliente in dataframe_clientes[0]:
+            id = cliente.split(" ")[1]
+            cliente = Cliente(id, cliente)
             session.add(cliente)
         session.commit()
     except Exception as e:
