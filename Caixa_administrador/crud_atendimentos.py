@@ -3,14 +3,14 @@ from crud_produtos import *
 from datetime import *
 from menus import *
 
-def create_atendimento(session):
+def create_atendimento(session, id_cliente):
     '''
     Cria um novo atendimento.
     Numero do Cliente | Data e Hora | Lista de Produtos Comprados [[ID, Nome, Quantidade, Preço, Quantidade Comprada]]
     '''
 
     print("Criar atendimento:")
-    numero_cliente = 0
+    numero_cliente = id_cliente
     data = datetime.now().strftime("%d/%m/%Y %H:%M")
     produtos_comprados = adicionar_carrinho(session)
     atendimento = [numero_cliente, data, produtos_comprados]
@@ -23,7 +23,7 @@ def adicionar_carrinho(session):
         menu_compra()
         match input_int("Selecione uma opção: "):
             case 1:
-                produto_id = input("Digite o ID do produto a ser adicionado: ")
+                produto_id = input_int_positivo("Digite o ID do produto a ser adicionado: ")
                 produto_encontrado = dic_produtos.get(produto_id)
                 if produto_encontrado:
                         quantidade = input_int_positivo("Quantidade: ")

@@ -17,7 +17,7 @@ def escolher_cliente(session):
 
 def atender_cliente(session):
     id_cliente = escolher_cliente(session)
-    atendimento = create_atendimento(session)
+    atendimento = create_atendimento(session, id_cliente)
     if (not atendimento[2] == []):
         return atendimento
     else: 
@@ -35,7 +35,7 @@ def emitir_nota_fiscal(atendimento):
         total += item[4]
         contador += 1
 
-    print(f"CLiente {cliente}")
+    print(f"\nCLiente {cliente}")
     print(f"Data: {data}")
     print()
     cabecalho = ["Item", "Produto", "Quant."," Preço", "Total"]
@@ -54,7 +54,6 @@ def abrir_caixa(session):
             case 1:
                 atendimento = atender_cliente(session)
                 if (not atendimento == None):
-                    atendimento[0] = len(lista_atendimentos) + 1
                     emitir_nota_fiscal(atendimento)
                     lista_atendimentos.append(atendimento)
             case 2:
