@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 
 def caminho_arquivo():
-    BANCO = "./mercado.sql"
+    BANCO = "./dados/mercado.sql"
     DIR = os.path.dirname(os.path.abspath(__file__))
     ARQ = os.path.join(DIR, BANCO)
     return ARQ

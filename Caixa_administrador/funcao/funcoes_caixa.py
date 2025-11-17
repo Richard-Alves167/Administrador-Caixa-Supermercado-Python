@@ -1,8 +1,8 @@
-from util import *
-from util_db import *
-from crud_produtos import *
-from funcoes_atendimento import *
-from menus import *
+from util.util import *
+from util.util_db import *
+from crud.crud_produtos import *
+from funcao.funcoes_atendimento import *
+from util.menus import *
 
 def visualizar_produto(session):
     produto_id = input("Digite o ID do produto: ")

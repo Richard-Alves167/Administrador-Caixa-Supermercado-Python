@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from conexao import conectar, desconectar, caminho_arquivo
-from util_web_produtos import buscar_produtos_site
+from util.util_web_produtos import buscar_produtos_site
 from models import *
 import os
 import pandas as pd
@@ -9,7 +9,7 @@ import json
 def mocki_arquivo_produtos():
     lista_produtos = buscar_produtos_site()
     try:
-        arquivo = open("Caixa_administrador/produtos.csv","w", encoding='utf-8')
+        arquivo = open("Caixa_administrador/dados/produtos.csv","w", encoding='utf-8')
         arquivo.write("nome;quantidade;preco\n")
         for produto in lista_produtos:
             linha = f"{produto}\n"
@@ -19,9 +19,9 @@ def mocki_arquivo_produtos():
         print("Erro ao criar arquivo de produtos:", e)
 
 def deletar_arquivo_produtos():
-    if os.path.isfile("Caixa_administrador/produtos.csv"):
+    if os.path.isfile("Caixa_administrador/dados/produtos.csv"):
         try:
-            os.remove("Caixa_administrador/produtos.csv")
+            os.remove("Caixa_administrador/dados/produtos.csv")
             print("Arquivo de produtos deletado com sucesso!")
         except Exception as e:
             print("Erro ao deletar arquivo de proutos:", e)
@@ -48,8 +48,8 @@ def resetar_tabela_produto():
         print("Erro ao resetar tabela:", e)
 
 def mocki_produtos(session):
-    produtos_mocki = pd.read_csv("Caixa_administrador/produtos.csv",sep=";").values.tolist()
     try:
+        produtos_mocki = pd.read_csv("Caixa_administrador/dados/produtos.csv",sep=";").values.tolist()
         for produto in produtos_mocki:
             produto = Produto(produto[0], int(produto[1]), float(produto[2]))
             session.add(produto)
@@ -60,7 +60,7 @@ def mocki_produtos(session):
 def mocki_arquivo_clientes():
     json_clientes = json.dumps(['Cliente 1','Cliente 2','Cliente 3'])
     try:
-        arquivo = open("Caixa_administrador/clientes.json","w")
+        arquivo = open("Caixa_administrador/dados/clientes.json","w")
         arquivo.write(json_clientes)
         arquivo.close()
         print("Arquivo de clientes criado com sucesso!")
@@ -68,9 +68,9 @@ def mocki_arquivo_clientes():
         print("Erro ao criar arquivo de clientes:", e)
 
 def deletar_arquivo_clientes():
-    if os.path.isfile("Caixa_administrador/clientes.json"):
+    if os.path.isfile("Caixa_administrador/dados/clientes.json"):
         try:
-            os.remove("Caixa_administrador/clientes.json")
+            os.remove("Caixa_administrador/dados/clientes.json")
             print("Arquivo de clientes deletado com sucesso!")
         except Exception as e:
             print("Erro ao deletar arquivo de clientes:", e)
@@ -97,7 +97,7 @@ def resetar_tabela_cliente():
         print("Erro ao resetar tabela:", e)
 
 def mocki_clientes(session):
-    dataframe_clientes = pd.read_json("Caixa_administrador/clientes.json")
+    dataframe_clientes = pd.read_json("Caixa_administrador/dados/clientes.json")
     try:
         for cliente in dataframe_clientes[0]:
             id = cliente.split(" ")[1]
@@ -105,4 +105,4 @@ def mocki_clientes(session):
             session.add(cliente)
         session.commit()
     except Exception as e:
-        print("Erro ao inserir clientes mocki:", e)   
+        print("Erro ao inserir clientes mocki:", e)

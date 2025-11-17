@@ -1,9 +1,9 @@
-from util import *
-from crud_produtos import *
+from util.util import *
+from crud.crud_produtos import *
 from models import Atendimento
-from util_tabela import agrupar_itens_carrinho
+from util.util_tabela import agrupar_itens_carrinho
 from datetime import *
-from menus import *
+from util.menus import *
 
 def create_atendimento(session, id_cliente):
     '''

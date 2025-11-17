@@ -1,8 +1,8 @@
-from util import *
-from crud_produtos import *
-from crud_atendimentos import *
-from crud_clientes import *
-from menus import *
+from util.util import *
+from crud.crud_produtos import *
+from crud.crud_atendimentos import *
+from crud.crud_clientes import *
+from util.menus import *
 from tabulate import tabulate
 import pandas as pd
 
@@ -45,7 +45,6 @@ def emitir_nota_fiscal(atendimento):
     print(f"Total: {total:.2f}")
 
 def abrir_caixa(session):
-    read_clientes(session)
     lista_atendimentos = []
     while(True):
         menu_atendimento()

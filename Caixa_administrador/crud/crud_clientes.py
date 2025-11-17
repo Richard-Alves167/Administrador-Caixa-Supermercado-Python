@@ -1,5 +1,5 @@
 from models import Cliente
-from util import *
+from util.util import *
 
 def create_cliente(id_cliente):
     '''

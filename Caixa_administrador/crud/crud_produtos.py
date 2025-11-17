@@ -1,5 +1,5 @@
 import os.path
-from util import *
+from util.util import *
 from datetime import *
 from models import Produto
 
