@@ -1,9 +1,9 @@
-from util.util import *
-from crud.crud_produtos import *
-from models import Atendimento
-from util.util_tabela import agrupar_itens_carrinho
+from common.util import *
+from common.crud.produtos import *
+from common.models import Atendimento
+from common.menus import *
+from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
 from datetime import *
-from util.menus import *
 
 def create_atendimento(session, id_cliente):
     '''

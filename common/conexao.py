@@ -1,10 +1,10 @@
-import os.path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
+import os.path
 
 def caminho_arquivo():
-    BANCO = "./dados/mercado.sql"
+    BANCO = "datasets/mercado.sql"
     DIR = os.path.dirname(os.path.abspath(__file__))
     ARQ = os.path.join(DIR, BANCO)
     return ARQ

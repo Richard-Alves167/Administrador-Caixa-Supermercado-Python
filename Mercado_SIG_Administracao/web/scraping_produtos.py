@@ -1,9 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import pandas as pd
-import lxml
-from io import StringIO
-from models import Produto
+from common.models import Produto
 
 URL = "https://pedrovncs.github.io/lindosprecos/produtos.html#"
 

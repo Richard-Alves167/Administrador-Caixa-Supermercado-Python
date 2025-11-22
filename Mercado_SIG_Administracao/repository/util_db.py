@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
-from conexao import conectar, desconectar, caminho_arquivo
-from util.util_web_produtos import buscar_produtos_site
-from models import *
+from common.conexao import caminho_arquivo
+from common.models import *
+from Mercado_SIG_Administracao.web.scraping_produtos import buscar_produtos_site
 import os
 import pandas as pd
 import json
@@ -9,7 +9,7 @@ import json
 def mocki_arquivo_produtos():
     lista_produtos = buscar_produtos_site()
     try:
-        arquivo = open("Caixa_administrador/dados/produtos.csv","w", encoding='utf-8')
+        arquivo = open("common/datasets/produtos.csv","w", encoding='utf-8')
         arquivo.write("nome;quantidade;preco\n")
         for produto in lista_produtos:
             linha = f"{produto}\n"
@@ -19,9 +19,9 @@ def mocki_arquivo_produtos():
         print("Erro ao criar arquivo de produtos:", e)
 
 def deletar_arquivo_produtos():
-    if os.path.isfile("Caixa_administrador/dados/produtos.csv"):
+    if os.path.isfile("common/datasets/produtos.csv"):
         try:
-            os.remove("Caixa_administrador/dados/produtos.csv")
+            os.remove("common/datasets/produtos.csv")
             print("Arquivo de produtos deletado com sucesso!")
         except Exception as e:
             print("Erro ao deletar arquivo de proutos:", e)
@@ -32,7 +32,6 @@ def criar_tabela_produto():
     try:
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "produto"):
-            from models import Produto
             Produto.__table__.create(bind=engine)
             print("Tabela criada com sucesso!")
     except Exception as e:
@@ -49,7 +48,7 @@ def resetar_tabela_produto():
 
 def mocki_produtos(session):
     try:
-        produtos_mocki = pd.read_csv("Caixa_administrador/dados/produtos.csv",sep=";").values.tolist()
+        produtos_mocki = pd.read_csv("common/datasets/produtos.csv",sep=";").values.tolist()
         for produto in produtos_mocki:
             produto = Produto(produto[0], int(produto[1]), float(produto[2]))
             session.add(produto)
@@ -60,7 +59,7 @@ def mocki_produtos(session):
 def mocki_arquivo_clientes():
     json_clientes = json.dumps(['Cliente 1','Cliente 2','Cliente 3'])
     try:
-        arquivo = open("Caixa_administrador/dados/clientes.json","w")
+        arquivo = open("common/datasets/clientes.json","w")
         arquivo.write(json_clientes)
         arquivo.close()
         print("Arquivo de clientes criado com sucesso!")
@@ -68,9 +67,9 @@ def mocki_arquivo_clientes():
         print("Erro ao criar arquivo de clientes:", e)
 
 def deletar_arquivo_clientes():
-    if os.path.isfile("Caixa_administrador/dados/clientes.json"):
+    if os.path.isfile("common/datasets/clientes.json"):
         try:
-            os.remove("Caixa_administrador/dados/clientes.json")
+            os.remove("common/datasets/clientes.json")
             print("Arquivo de clientes deletado com sucesso!")
         except Exception as e:
             print("Erro ao deletar arquivo de clientes:", e)
@@ -81,7 +80,6 @@ def criar_tabela_cliente():
     try:
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "cliente"):
-            from models import Cliente
             Cliente.__table__.create(bind=engine)
             print("Tabela criada com sucesso!")
     except Exception as e:
@@ -97,7 +95,7 @@ def resetar_tabela_cliente():
         print("Erro ao resetar tabela:", e)
 
 def mocki_clientes(session):
-    dataframe_clientes = pd.read_json("Caixa_administrador/dados/clientes.json")
+    dataframe_clientes = pd.read_json("common/datasets/clientes.json")
     try:
         for cliente in dataframe_clientes[0]:
             id = cliente.split(" ")[1]

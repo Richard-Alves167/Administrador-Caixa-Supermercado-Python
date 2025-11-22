@@ -1,7 +1,7 @@
-import os.path
-from util.util import *
+from common.util import *
+from common.models import Produto
 from datetime import *
-from models import Produto
+import os.path
 
 def create_produto():
     '''
@@ -66,7 +66,7 @@ def read_produtos(session):
 
 def update_produto_preco(session, produto_id):
     try:
-        produto = return_produto(produto_id)
+        produto = return_produto(session, produto_id)
         if produto:
             novo_preco = input_float_positivo("Novo preço: ")
             session.query(Produto).filter(Produto.id_produto == produto_id).update({"preco": novo_preco})
@@ -77,7 +77,7 @@ def update_produto_preco(session, produto_id):
 
 def update_produto_quantidade(session, produto_id):
     try:
-        produto = return_produto(produto_id)
+        produto = return_produto(session, produto_id)
         if produto:
             nova_quantidade = input_int_positivo("Nova quantidade no estoque: ")
             session.query(Produto).filter(Produto.id_produto == produto_id).update({"quantidade": nova_quantidade})

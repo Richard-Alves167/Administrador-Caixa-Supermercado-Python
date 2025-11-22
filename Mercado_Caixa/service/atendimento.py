@@ -1,8 +1,8 @@
-from util.util import *
-from crud.crud_produtos import *
-from crud.crud_atendimentos import *
-from crud.crud_clientes import *
-from util.menus import *
+from Mercado_Caixa.crud.atendimentos import *
+from common.util import *
+from common.crud.produtos import *
+from common.crud.clientes import *
+from common.menus import *
 from tabulate import tabulate
 import pandas as pd
 

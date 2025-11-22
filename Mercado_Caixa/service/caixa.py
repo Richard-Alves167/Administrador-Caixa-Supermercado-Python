@@ -1,8 +1,9 @@
-from util.util import *
-from util.util_db import *
-from crud.crud_produtos import *
-from funcao.funcoes_atendimento import *
-from util.menus import *
+from common.util import *
+from common.crud.produtos import *
+from common.menus import *
+from common.conexao import *
+from Mercado_SIG_Administracao.repository.util_db import *
+from Mercado_Caixa.service.atendimento import *
 
 def visualizar_produto(session):
     produto_id = input("Digite o ID do produto: ")
@@ -17,7 +18,8 @@ def adicionar_produto(session):
 
 def modificar_produto(session):
     produto_id = input("Digite o ID do produto a ser modificado: ")
-    if (not return_produto(session, produto_id) == None):
+    produto = return_produto(session, produto_id)
+    if produto:
         menu_modificar_produto()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
