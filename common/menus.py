@@ -1,4 +1,4 @@
-def menu_caixa():
+def menu_sistema():
     print('''
     ==============================
     =  Menu Sistema Supermercado =

@@ -1,119 +1,81 @@
+from Mercado_Caixa.crud.atendimentos import *
+from Mercado_Caixa.service.atendimento import *
 from common.util import *
 from common.crud.produtos import *
+from common.crud.clientes import *
 from common.menus import *
-from common.conexao import *
-from Mercado_SIG_Administracao.repository.util_db import *
-from Mercado_Caixa.service.atendimento import *
+from tabulate import tabulate
 
-def visualizar_produto(session):
-    produto_id = input("Digite o ID do produto: ")
-    read_produto(session, produto_id)
+def emitir_nota_fiscal(atendimento):
+    cliente = atendimento.id_cliente
+    data = atendimento.data_criacao
+    contador = 1
+    total = 0
+    itens_produto = atendimento.carrinho_produtos
+    for item in itens_produto:
+        total += item[4]
+        contador += 1
 
-def visualizar_produtos(session):
-    read_produtos(session)
+    print(f"\nCLiente {cliente}")
+    print(f"Data: {data}")
+    print()
+    cabecalho = ["Item", "Produto", "Quant."," Preço", "Total"]
+    print(tabulate(itens_produto, headers=cabecalho))
+    print()
+    print(f"Itens: {len(itens_produto)}")
+    print(f"Total: {total:.2f}")
 
-def adicionar_produto(session):
-    produto = create_produto()
-    insert_produto(session, produto)
-
-def modificar_produto(session):
-    produto_id = input("Digite o ID do produto a ser modificado: ")
-    produto = return_produto(session, produto_id)
-    if produto:
-        menu_modificar_produto()
-        opcao = input_int("Selecione uma opção: ")
-        match opcao:
-            case 1:
-                update_produto_preco(session, produto_id)
-            case 2:
-                update_produto_quantidade(session, produto_id)
-            case _:
-                print("Opção inválida!")
-    else:
-        print("Produto não encontrado")
-
-def deletar_produto(session):
-    produto_id = input("Digite o ID do produto a ser deletado: ")
-    delete_produto(session, produto_id)
-
-def desligar_sistema():
-    print("Desligando sistema...")
-
-def selecionar_opcao_caixa(session):
+def abrir_caixa(session):
+    lista_atendimentos = []
     while(True):
+        menu_atendimento()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
-            case 0:
-                menu_caixa()
             case 1:
-                acessar_area_administrador(session)
+                atendimento = atender_cliente(session)
+                if (not atendimento == None):
+                    update_estoque(session, atendimento.carrinho_produtos)
+                    emitir_nota_fiscal(atendimento)
+                    lista_atendimentos.append(atendimento)
             case 2:
-                abrir_caixa(session)
-            case 3:
-                desligar_sistema()
+                fechar_caixa(session, lista_atendimentos)
                 break
             case _:
                 print("Opção inválida!")
 
-def acessar_area_administrador(session):
-    senha = input("Digite a senha de administrador: ")
-    if (senha == "admin123"):
-        print("Acesso concedido!")
-        print("Entrando no sistema operacional de estoque...")
-        selecionar_opcao_administracao(session)
+def emitir_nota_clientes_atendidos(lista_atendimentos):
+    lista_clientes_separados = []
+    for atendimento in lista_atendimentos:
+        nome_cliente = f"Cliente {atendimento.id_cliente}"
+        total_cliente = sum([item[4] for item in atendimento.carrinho_produtos])
+        lista_clientes_separados.append([nome_cliente, total_cliente])
+    total = sum([cliente[1] for cliente in lista_clientes_separados])
+
+    data = datetime.now().strftime("%d/%m/%Y %H:%M")
+    print("Fechamento do caixa\n")
+    print(f"Data: {data}")
+    print()
+    cabecalho = ["Cliente", "Total"]
+    print(tabulate(lista_clientes_separados, headers=cabecalho))
+    print()
+    print(f"Total: {total:.2f}")
+
+def verificar_produtos_indisponiveis(session):
+    dic_produtos = return_produtos(session)
+    produtos_indisponiveis = []
+    for index_dic in dic_produtos:
+        produto = dic_produtos[index_dic]
+        if int(produto.quantidade) == 0:
+            produtos_indisponiveis.append(produto)
+    if (not produtos_indisponiveis == []):
+        print("\nProdutos sem estoque:")
+        for produto in produtos_indisponiveis:
+            print(produto.nome)
     else:
-        print("Senha incorreta!")
+        print("Todos os produtos estão com estoque disponível.")
 
-def resetar_estoque(session):
-    deletar_arquivo_produtos()
-    mocki_arquivo_produtos()
-    resetar_tabela_produto()
-    criar_tabela_produto()
-    mocki_produtos(session)
-    print("Estoque resetado com sucesso!")
 
-def resetar_clientes(session):
-    deletar_arquivo_clientes()
-    mocki_arquivo_clientes()
-    resetar_tabela_cliente()
-    criar_tabela_cliente()
-    mocki_clientes(session)
-    print("Clientes resetados com sucesso!")
-
-def sair_sistema_administrador():
-    print("Saindo do sistema operacional de estoque...")
-
-def selecionar_opcao_administracao(session):
-    menu_administracao()
-    while(True):
-        opcao = input_int("\nSelecione uma opção: ")
-        match opcao:
-            case 0:
-                menu_administracao()
-            case 1:
-                visualizar_produtos(session)
-            case 2:
-                visualizar_produto(session)
-            case 3:
-                adicionar_produto(session)
-            case 4:
-                modificar_produto(session)
-            case 5:
-                deletar_produto(session)
-            case 6:
-                resetar_estoque(session)
-            case 7:
-                resetar_clientes(session)
-            case 8:
-                sair_sistema_administrador()
-                break
-            case _:
-                print("Opção inválida!")
-
-def abrir_sistema_supermercado():
-    print("Inicializando sistema...")
-    session = conectar()
-    menu_caixa()
-    selecionar_opcao_caixa(session)
-    desconectar(session)
-    print("Sistema finalizado")
+def fechar_caixa(session, lista_atendimentos):
+    emitir_nota_clientes_atendidos(lista_atendimentos)
+    verificar_produtos_indisponiveis(session)
+    print("\nCaixa fechado com sucesso!\n")

@@ -1,3 +1,3 @@
-from Mercado_Caixa.service.caixa import *
+from common.init_main import *
 
 abrir_sistema_supermercado()
