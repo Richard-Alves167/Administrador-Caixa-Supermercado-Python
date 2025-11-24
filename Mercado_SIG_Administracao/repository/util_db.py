@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine
-from common.conexao import caminho_arquivo
-from common.models import *
+from Common.conexao import caminho_arquivo
+from Common.models import *
 from Mercado_SIG_Administracao.web.scraping_produtos import buscar_produtos_site
+from sqlalchemy import create_engine
 import os
 import pandas as pd
 import json

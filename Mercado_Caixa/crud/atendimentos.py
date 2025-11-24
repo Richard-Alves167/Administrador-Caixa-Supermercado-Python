@@ -1,7 +1,7 @@
-from common.util import *
-from common.crud.produtos import *
-from common.models import Atendimento
-from common.menus import *
+from Common.util import *
+from Common.crud.produtos import *
+from Common.models import Atendimento
+from Common.menus import *
 from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
 from datetime import *
 

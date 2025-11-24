@@ -1,18 +1,3 @@
-def menu_sistema():
-    print('''
-    ==============================
-    =  Menu Sistema Supermercado =
-    ==============================
-    = 0 - Visualizar MENU        =
-    ------------------------------
-    = 1 - Acessar Adiministração =
-    ------------------------------
-    = 2 - Abrir Caixa            =
-    ------------------------------
-    = 3 - Fechar Sistema         =
-    ==============================
-    ''')
-
 def menu_administracao():
     print('''
     ==============================

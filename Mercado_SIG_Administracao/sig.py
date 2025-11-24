@@ -1,7 +1,7 @@
-from common.util import *
-from common.crud.produtos import *
-from common.menus import *
-from common.conexao import *
+from Common.util import *
+from Common.crud.produtos import *
+from Common.menus import *
+from Common.conexao import *
 from Mercado_SIG_Administracao.repository.util_db import *
 
 def visualizar_produto(session):
@@ -35,15 +35,6 @@ def deletar_produto(session):
     produto_id = input("Digite o ID do produto a ser deletado: ")
     delete_produto(session, produto_id)
 
-def acessar_area_administrador(session):
-    senha = input("Digite a senha de administrador: ")
-    if (senha == "admin123"):
-        print("Acesso concedido!")
-        print("Entrando no sistema operacional de estoque...")
-        selecionar_opcao_administracao(session)
-    else:
-        print("Senha incorreta!")
-
 def resetar_estoque(session):
     deletar_arquivo_produtos()
     mocki_arquivo_produtos()
@@ -59,6 +50,14 @@ def resetar_clientes(session):
     criar_tabela_cliente()
     mocki_clientes(session)
     print("Clientes resetados com sucesso!")
+
+def acessar_area_administrador(session):
+    senha = input("Digite a senha de administrador: ")
+    if (senha == "admin123"):
+        print("Acesso concedido!")
+        selecionar_opcao_administracao(session)
+    else:
+        print("Senha incorreta!")
 
 def sair_sistema_administrador():
     print("Saindo do sistema operacional de estoque...")

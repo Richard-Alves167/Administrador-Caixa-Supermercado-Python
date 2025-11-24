@@ -1,5 +1,5 @@
-from common.models import Cliente
-from common.util import *
+from Common.models import Cliente
+from Common.util import *
 
 def create_cliente(id_cliente):
     '''

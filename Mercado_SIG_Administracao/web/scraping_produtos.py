@@ -1,6 +1,6 @@
+from Common.models import Produto
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from common.models import Produto
 
 URL = "https://pedrovncs.github.io/lindosprecos/produtos.html#"
 

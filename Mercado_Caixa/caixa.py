@@ -1,9 +1,9 @@
 from Mercado_Caixa.crud.atendimentos import *
 from Mercado_Caixa.service.atendimento import *
-from common.util import *
-from common.crud.produtos import *
-from common.crud.clientes import *
-from common.menus import *
+from Common.util import *
+from Common.crud.produtos import *
+from Common.crud.clientes import *
+from Common.menus import *
 from tabulate import tabulate
 
 def emitir_nota_fiscal(atendimento):

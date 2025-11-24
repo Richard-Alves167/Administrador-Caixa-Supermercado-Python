@@ -1,5 +1,5 @@
-from common.util import *
-from common.models import Produto
+from Common.util import *
+from Common.models import Produto
 from datetime import *
 import os.path
 
