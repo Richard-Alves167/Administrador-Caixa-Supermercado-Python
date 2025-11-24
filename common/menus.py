@@ -15,11 +15,9 @@ def menu_administracao():
     ------------------------------
     = 5 - Deletar Produto        =
     ------------------------------
-    = 6 - Resetar Estoque        =
+    = 6 - Resetar Banco de Dados =
     ------------------------------
-    = 7 - Resetar Clientes       =
-    ------------------------------
-    = 8 - Sair do Sistema ADM    =
+    = 7 - Sair do Sistema ADM    =
     ==============================
     ''')
 

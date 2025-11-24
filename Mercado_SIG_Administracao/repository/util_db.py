@@ -33,7 +33,7 @@ def criar_tabela_produto():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "produto"):
             Produto.__table__.create(bind=engine)
-            print("Tabela criada com sucesso!")
+            print("Tabela de Produtos criada com sucesso!")
     except Exception as e:
         print("Erro ao criar tabela:", e)
 
@@ -42,7 +42,7 @@ def resetar_tabela_produto():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if engine.dialect.has_table(engine.connect(), "produto"):
             Produto.__table__.drop(engine)
-        print("Tabela resetada com sucesso!")
+        print("Tabela de Produtos resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)
 
@@ -81,7 +81,7 @@ def criar_tabela_cliente():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "cliente"):
             Cliente.__table__.create(bind=engine)
-            print("Tabela criada com sucesso!")
+            print("Tabela de Clientes criada com sucesso!")
     except Exception as e:
         print("Erro ao criar tabela:", e)
 
@@ -90,7 +90,7 @@ def resetar_tabela_cliente():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if engine.dialect.has_table(engine.connect(), "cliente"):
             Cliente.__table__.drop(engine)
-        print("Tabela resetada com sucesso!")
+        print("Tabela de Clientes resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)
 
@@ -110,7 +110,7 @@ def criar_tabela_compra():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "compra"):
             Compra.__table__.create(bind=engine)
-            print("Tabela criada com sucesso!")
+            print("Tabela de Compras criada com sucesso!")
     except Exception as e:
         print("Erro ao criar tabela:", e)
 
@@ -120,7 +120,7 @@ def resetar_tabela_compra():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if engine.dialect.has_table(engine.connect(), "compra"):
             Compra.__table__.drop(engine)
-        print("Tabela resetada com sucesso!")
+        print("Tabela de Compras resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)
 
@@ -129,7 +129,7 @@ def criar_tabela_iten():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "iten"):
             Iten.__table__.create(bind=engine)
-            print("Tabela criada com sucesso!")
+            print("Tabela de Itens criada com sucesso!")
     except Exception as e:
         print("Erro ao criar tabela:", e)
 
@@ -138,7 +138,7 @@ def resetar_tabela_iten():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if engine.dialect.has_table(engine.connect(), "iten"):
             Iten.__table__.drop(engine)
-        print("Tabela resetada com sucesso!")
+        print("Tabela de Itens resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)
 
@@ -147,7 +147,7 @@ def criar_tabela_fornecedor():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if not engine.dialect.has_table(engine.connect(), "fornecedor"):
             Fornecedor.__table__.create(bind=engine)
-            print("Tabela criada com sucesso!")
+            print("Tabela de Fornecedores criada com sucesso!")
     except Exception as e:
         print("Erro ao criar tabela:", e)
    
@@ -156,6 +156,6 @@ def resetar_tabela_fornecedor():
         engine = create_engine("sqlite:///" + caminho_arquivo())
         if engine.dialect.has_table(engine.connect(), "fornecedor"):
             Fornecedor.__table__.drop(engine)
-        print("Tabela resetada com sucesso!")
+        print("Tabela de Fornecedores resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)

@@ -35,6 +35,13 @@ def deletar_produto(session):
     produto_id = input("Digite o ID do produto a ser deletado: ")
     delete_produto(session, produto_id)
 
+def resetar_banco_de_dados(session):
+    resetar_estoque(session)
+    resetar_clientes(session)
+    resetar_compras(session)
+    resetar_itens(session)
+    resetar_fornecedores(session)
+
 def resetar_estoque(session):
     deletar_arquivo_produtos()
     mocki_arquivo_produtos()
@@ -56,12 +63,12 @@ def resetar_compras(session):
     criar_tabela_compra()
     
 def resetar_itens(session):
-    resetar_tabela_compra()
-    criar_tabela_compra()
+    resetar_tabela_iten()
+    criar_tabela_iten()
 
 def resetar_fornecedores(session):
-    resetar_tabela_compra()
-    criar_tabela_compra()
+    resetar_tabela_fornecedor()
+    criar_tabela_fornecedor()
 
 def acessar_area_administrador(session):
     senha = input("Digite a senha de administrador: ")
@@ -92,10 +99,8 @@ def selecionar_opcao_administracao(session):
             case 5:
                 deletar_produto(session)
             case 6:
-                resetar_estoque(session)
+                resetar_banco_de_dados(session)
             case 7:
-                resetar_clientes(session)
-            case 8:
                 sair_sistema_administrador()
                 break
             case _:
