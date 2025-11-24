@@ -51,6 +51,18 @@ def resetar_clientes(session):
     mocki_clientes(session)
     print("Clientes resetados com sucesso!")
 
+def resetar_compras(session):
+    resetar_tabela_compra()
+    criar_tabela_compra()
+    
+def resetar_itens(session):
+    resetar_tabela_compra()
+    criar_tabela_compra()
+
+def resetar_fornecedores(session):
+    resetar_tabela_compra()
+    criar_tabela_compra()
+
 def acessar_area_administrador(session):
     senha = input("Digite a senha de administrador: ")
     if (senha == "admin123"):
