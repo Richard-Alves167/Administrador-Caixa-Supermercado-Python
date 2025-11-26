@@ -41,6 +41,7 @@ def resetar_banco_de_dados(session):
     resetar_compras(session)
     resetar_itens(session)
     resetar_fornecedores(session)
+    resetar_relacionamento_fornecedor_produto(session)
 
 def resetar_estoque(session):
     deletar_arquivo_produtos()
@@ -48,7 +49,7 @@ def resetar_estoque(session):
     resetar_tabela_produto()
     criar_tabela_produto()
     mocki_produtos(session)
-    print("Estoque resetado com sucesso!")
+    print("Estoque resetado com sucesso!\n")
 
 def resetar_clientes(session):
     deletar_arquivo_clientes()
@@ -56,21 +57,29 @@ def resetar_clientes(session):
     resetar_tabela_cliente()
     criar_tabela_cliente()
     mocki_clientes(session)
-    print("Clientes resetados com sucesso!")
+    print("Clientes resetados com sucesso!\n")
 
 def resetar_compras(session):
     resetar_tabela_compra()
     criar_tabela_compra()
+    print("Compras resetados com sucesso!\n")
     
 def resetar_itens(session):
     resetar_tabela_iten()
     criar_tabela_iten()
+    print("Itens resetados com sucesso!\n")
 
 def resetar_fornecedores(session):
     resetar_tabela_fornecedor()
     criar_tabela_fornecedor()
     mocki_fornecedores(session)
-    print("Fornecedores resetados com sucesso!")
+    print("Fornecedores resetados com sucesso!\n")
+
+def resetar_relacionamento_fornecedor_produto(session):
+    resetar_tabela_fornecedor_produto()
+    criar_tabela_fornecedor_produto()
+    mocki_fornecedores_produtos(session)
+    print("Relacionamento Fornecedor <-> Produto resetados com sucesso!\n")
 
 def acessar_area_administrador(session):
     senha = input("Digite a senha de administrador: ")

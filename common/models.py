@@ -107,8 +107,9 @@ class Fornecedor_Produto(Base):
     id_fornecedor = Column(Integer, ForeignKey("fornecedor.id_fornecedor"), primary_key=True)
     id_produto = Column(Integer, ForeignKey("produto.id_produto"), primary_key=True)
 
-    def __init__(self, nome):
-        self.nome = nome
+    def __init__(self, id_fornecedor, id_produto):
+        self.id_fornecedor = id_fornecedor
+        self.id_produto = id_produto
 
     def __str__(self):
         return f"{self.id_fornecedor};{self.id_produto}"
