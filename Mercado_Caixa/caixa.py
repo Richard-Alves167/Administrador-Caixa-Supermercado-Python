@@ -3,7 +3,9 @@ from Mercado_Caixa.service.atendimento import *
 from Common.util import *
 from Common.crud.produtos import *
 from Common.crud.clientes import *
+from Common.crud.compra import *
 from Common.menus import *
+from Mercado_Caixa.service.compra import *
 from tabulate import tabulate
 
 def emitir_nota_fiscal(atendimento):
@@ -37,6 +39,7 @@ def abrir_caixa(session):
                     update_estoque(session, atendimento.carrinho_produtos)
                     emitir_nota_fiscal(atendimento)
                     lista_atendimentos.append(atendimento)
+                    salvar_compra(session, atendimento)
             case 2:
                 fechar_caixa(session, lista_atendimentos)
                 break
@@ -73,7 +76,6 @@ def verificar_produtos_indisponiveis(session):
             print(produto.nome)
     else:
         print("Todos os produtos estão com estoque disponível.")
-
 
 def fechar_caixa(session, lista_atendimentos):
     emitir_nota_clientes_atendidos(lista_atendimentos)

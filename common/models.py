@@ -35,9 +35,9 @@ class Compra(Base):
     cliente = relationship("Cliente", back_populates="compras")
     itens = relationship("Iten", cascade="all, delete")
 
-    def __init__(self, id_cliente):
+    def __init__(self, id_cliente, data_hora):
         self.id_cliente = id_cliente
-        self.data_hora = datetime.now().strftime('%d/%m/%Y %H:%M')
+        self.data_hora = data_hora
 
     def __str__(self):
         return f"{self.id_cliente};{self.data_hora}"
