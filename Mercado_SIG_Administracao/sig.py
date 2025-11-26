@@ -131,7 +131,7 @@ def selecionar_opcao_produto_consulta(session):
             case 3:
                 visualizar_produtos_pouco_estoque(session)
             case 4:
-                visualizar_produtos_fornecedores(session)
+                visualizar_produto_fornecedores(session)
             case 5:
                 visualizar_produtos_sem_fornecedores(session)
             case 6:
