@@ -33,7 +33,7 @@ class Compra(Base):
     data_hora = Column(String, nullable=False)
     id_cliente = Column(Integer, ForeignKey("cliente.id_cliente"))
     cliente = relationship("Cliente", back_populates="compras")
-    itens = relationship("Iten", cascade="all, delete")
+    itens = relationship("Item", cascade="all, delete")
 
     def __init__(self, id_cliente, data_hora):
         self.id_cliente = id_cliente
@@ -42,12 +42,12 @@ class Compra(Base):
     def __str__(self):
         return f"{self.id_cliente};{self.data_hora}"
     
-class Iten(Base):
-    '''Classe que representa um iten de uma compra com ID, ID da compra ID do produto, quantidade comprada, preço do produto na hora da compra.'''
+class Item(Base):
+    '''Classe que representa um item de uma compra com ID, ID da compra ID do produto, quantidade comprada, preço do produto na hora da compra.'''
 
-    __tablename__ = "iten"
+    __tablename__ = "item"
 
-    id_iten = Column(Integer, primary_key=True, autoincrement=True)
+    id_item = Column(Integer, primary_key=True, autoincrement=True)
     quantidade = Column(Integer, nullable=False)
     preco_unitario = Column(Float, nullable=False)
     id_compra = Column(Integer, ForeignKey("compra.id_compra"))
@@ -60,10 +60,9 @@ class Iten(Base):
         self.id_produto = id_produto
         self.quantidade = quantidade
         self.preco_unitario = preco_unitario
-        self.data_hora = datetime.now().strftime('%d/%m/%Y %H:%M')
 
     def __str__(self):
-        return f"{self.id_cliente};{self.id_compra};{self.id_iten};{self.id_produto};{self.quantidade};{self.preco_unitario}"
+        return f"{self.id_cliente};{self.id_compra};{self.id_item};{self.id_produto};{self.quantidade};{self.preco_unitario}"
     
 class Produto(Base):
     '''Classe que representa um produto com ID, nome, quantidade e preço.'''
@@ -74,7 +73,7 @@ class Produto(Base):
     nome = Column(String, nullable=False)
     quantidade = Column(Integer, nullable=False)
     preco = Column(Float, nullable=False)
-    vendas = relationship("Iten", cascade="all, delete")
+    vendas = relationship("Item", cascade="all, delete")
     fornecedores = relationship("Fornecedor", secondary="fornecedor_produto", back_populates="produtos", cascade="all, delete")
 
     def __init__(self, nome, quantidade, preco):
