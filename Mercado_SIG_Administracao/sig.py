@@ -69,6 +69,8 @@ def resetar_itens(session):
 def resetar_fornecedores(session):
     resetar_tabela_fornecedor()
     criar_tabela_fornecedor()
+    mocki_fornecedores(session)
+    print("Fornecedores resetados com sucesso!")
 
 def acessar_area_administrador(session):
     senha = input("Digite a senha de administrador: ")

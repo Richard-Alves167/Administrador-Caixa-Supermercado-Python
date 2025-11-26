@@ -159,3 +159,13 @@ def resetar_tabela_fornecedor():
         print("Tabela de Fornecedores resetada com sucesso!")
     except Exception as e:
         print("Erro ao resetar tabela:", e)
+
+def mocki_fornecedores(session):
+    try:
+        fornecedores_mocki = pd.read_excel("common/datasets/fornecedores.xlsx", sheet_name="fornecedores")
+        for fornecedor in fornecedores_mocki['nome']:
+            fornecedor = Fornecedor(fornecedor)
+            session.add(fornecedor)
+        session.commit()
+    except Exception as e:
+        print("Erro ao inserir fornecedores mocki:", e)
