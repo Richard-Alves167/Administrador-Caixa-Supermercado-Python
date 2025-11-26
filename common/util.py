@@ -41,3 +41,6 @@ def input_float_positivo(msg):
         except:
             print("Valor inválido!\nTente novamente...")
     return valor 
+
+def sair(frase):
+    print(frase)

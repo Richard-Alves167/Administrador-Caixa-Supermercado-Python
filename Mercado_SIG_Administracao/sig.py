@@ -1,39 +1,8 @@
 from Common.util import *
-from Common.crud.produtos import *
 from Common.menus import *
 from Common.conexao import *
 from Mercado_SIG_Administracao.repository.util_db import *
-
-def visualizar_produto(session):
-    produto_id = input("Digite o ID do produto: ")
-    read_produto(session, produto_id)
-
-def visualizar_produtos(session):
-    read_produtos(session)
-
-def adicionar_produto(session):
-    produto = create_produto()
-    insert_produto(session, produto)
-
-def modificar_produto(session):
-    produto_id = input("Digite o ID do produto a ser modificado: ")
-    produto = return_produto(session, produto_id)
-    if produto:
-        menu_modificar_produto()
-        opcao = input_int("Selecione uma opção: ")
-        match opcao:
-            case 1:
-                update_produto_preco(session, produto_id)
-            case 2:
-                update_produto_quantidade(session, produto_id)
-            case _:
-                print("Opção inválida!")
-    else:
-        print("Produto não encontrado")
-
-def deletar_produto(session):
-    produto_id = input("Digite o ID do produto a ser deletado: ")
-    delete_produto(session, produto_id)
+from Mercado_SIG_Administracao.service.produto import *
 
 def resetar_banco_de_dados(session):
     resetar_estoque(session)
@@ -89,9 +58,6 @@ def acessar_area_administrador(session):
     else:
         print("Senha incorreta!")
 
-def sair_sistema_administrador():
-    print("Saindo do sistema operacional de estoque...")
-
 def selecionar_opcao_administracao(session):
     menu_administracao()
     while(True):
@@ -99,6 +65,40 @@ def selecionar_opcao_administracao(session):
         match opcao:
             case 0:
                 menu_administracao()
+            case 1:
+                selecionar_opcao_administracao_produto(session)
+            case 2:
+                resetar_banco_de_dados(session)
+            case 3:
+                sair("Saindo do sistema operacional de estoque...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_administracao_produto(session):
+    menu_administracao_produto()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_administracao_produto()
+            case 1:
+                selecionar_opcao_produto_CRUD(session)
+            case 2:
+                selecionar_opcao_produto_consulta(session)
+            case 3:
+                sair("Saindo do sistema operacional de estoque...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_produto_CRUD(session):
+    menu_produto_CRUD()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_produto_CRUD()
             case 1:
                 visualizar_produtos(session)
             case 2:
@@ -110,9 +110,32 @@ def selecionar_opcao_administracao(session):
             case 5:
                 deletar_produto(session)
             case 6:
-                resetar_banco_de_dados(session)
+                resetar_estoque(session)
             case 7:
-                sair_sistema_administrador()
+                sair("Saindo do sistema de CRUD de produtos...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_produto_consulta(session):
+    menu_produto_consultas()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_produto_consultas()
+            case 1:
+                visualizar_produtos_mais_vendidos(session)
+            case 2:
+                visualizar_produtos_menos_vendidos(session)
+            case 3:
+                visualizar_produtos_pouco_estoque(session)
+            case 4:
+                visualizar_produtos_fornecedores(session)
+            case 5:
+                visualizar_produtos_sem_fornecedores(session)
+            case 6:
+                sair("Saindo do sistema de consultas de produtos...")
                 break
             case _:
                 print("Opção inválida!")
