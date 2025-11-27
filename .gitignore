@@ -1,5 +1,6 @@
 common/__pycache__
 common/crud/__pycache__
+Mercado_Caixa/__pycache__
 Mercado_Caixa/crud/__pycache__
 Mercado_Caixa/data/__pycache__
 Mercado_Caixa/service/__pycache__
@@ -7,3 +8,4 @@ Mercado_SIG_Administracao/crud/__pycache__
 Mercado_SIG_Administracao/repository/__pycache__
 Mercado_SIG_Administracao/service/__pycache__
 Mercado_SIG_Administracao/web/__pycache__
+Mercado_SIG_Administracao/__pycache__

@@ -3,6 +3,7 @@ from Common.menus import *
 from Common.conexao import *
 from Mercado_SIG_Administracao.repository.util_db import *
 from Mercado_SIG_Administracao.service.produto import *
+from Mercado_SIG_Administracao.service.cliente import *
 
 def resetar_banco_de_dados(session):
     resetar_estoque(session)
@@ -68,8 +69,10 @@ def selecionar_opcao_administracao(session):
             case 1:
                 selecionar_opcao_administracao_produto(session)
             case 2:
-                resetar_banco_de_dados(session)
+                selecionar_opcao_administracao_cliente(session)
             case 3:
+                resetar_banco_de_dados(session)
+            case 4:
                 sair("Saindo do sistema operacional de estoque...")
                 break
             case _:
@@ -136,6 +139,67 @@ def selecionar_opcao_produto_consulta(session):
                 visualizar_produtos_sem_fornecedores(session)
             case 6:
                 sair("Saindo do sistema de consultas de produtos...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_administracao_cliente(session):
+    menu_administracao_cliente()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_administracao_cliente()
+            case 1:
+                selecionar_opcao_cliente_CRUD(session)
+            case 2:
+                selecionar_opcao_cliente_consulta(session)
+            case 3:
+                sair("Saindo do sistema operacional de estoque...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_cliente_CRUD(session):
+    menu_cliente_CRUD()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_cliente_CRUD()
+            case 1:
+                visualizar_clientes(session)
+            case 2:
+                visualizar_cliente(session)
+            case 3:
+                resetar_estoque(session)
+            case 4:
+                sair("Saindo do sistema de CRUD de clientes...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_cliente_consulta(session):
+    menu_cliente_consultas()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_cliente_consultas()
+            case 1:
+                visualizar_clientes_com_compras(session)
+            case 2:
+                visualizar_clientes_sem_compras(session)
+            case 3:
+                visualizar_cliente_compras(session)
+            case 4:
+                visualizar_cliente_compra(session)
+            case 5:
+                visualizar_clientes_mais_compras(session)
+            case 6:
+                visualizar_clientes_mais_gasto(session)
+            case 7:
+                sair("Saindo do sistema de consultas de clientes...")
                 break
             case _:
                 print("Opção inválida!")

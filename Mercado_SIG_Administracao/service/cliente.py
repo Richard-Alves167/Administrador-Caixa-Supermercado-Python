@@ -1,0 +1,78 @@
+from Common.crud.cliente import *
+from Common.crud.compra import *
+from Common.menus import *
+from Common.models import *
+from Mercado_Caixa.caixa import emitir_nota_fiscal
+from sqlalchemy import text
+import pandas as pd
+
+def visualizar_cliente(session):
+    cliente_id = input("Digite o ID do cliente: ")
+    read_cliente(session, cliente_id)
+
+def visualizar_clientes(session):
+    read_clientes(session)
+
+def visualizar_clientes_com_compras(session):
+    conn = session.connection()
+    query = "select distinct c.nome as cliente from cliente c inner join compra cp on c.id_cliente = cp.id_cliente"
+    df = pd.read_sql_query(query, conn)
+    if df.empty:
+        print("Nenhum cliente com compras.")
+    else:
+        print(df.to_string(index=False))
+
+def visualizar_clientes_sem_compras(session):
+    conn = session.connection()
+    query = "select c.nome as cliente from cliente c left join compra cp on c.id_cliente = cp.id_cliente where cp.id_compra is null"
+    df = pd.read_sql_query(query, conn)
+    if df.empty:
+        print("Todos clientes cadastrados possuem compra.")
+    else:
+        print(df.to_string(index=False))
+
+def visualizar_cliente_compras(session):
+    conn = session.connection()
+    cliente_escolhido = input_int_positivo("Coloque o id do cliente em que deseja verificar as compras: ")
+    cliente = return_cliente(session, cliente_escolhido)
+    if cliente:
+        query = text("select c.nome as cliente, cp.id_compra, cp.data_hora as data_compra from cliente c inner join compra cp on c.id_cliente = cp.id_cliente where c.id_cliente = :id_cliente order by data_compra desc")
+        df = pd.read_sql_query(query, conn, params={"id_cliente": cliente_escolhido})
+        if df.empty:
+            print("Nenhuma compra existente.")
+        else:
+            print(df.to_string(index=False))
+
+def visualizar_cliente_compra(session):
+    conn = session.connection()
+    compra_escolhida = input_int_positivo("Coloque o id da compra em que deseja verificar a nota fiscal: ")
+    compra = return_compra(session, compra_escolhida)
+    if compra:
+        query = text("select p.id_produto, p.nome, i.quantidade, i.preco_unitario, (i.quantidade * i.preco_unitario) as preco_total from item i inner join produto p on i.id_produto = p.id_produto where i.id_compra = :id_compra")
+        df = pd.read_sql_query(query, conn, params={"id_compra": compra_escolhida})
+        if df.empty:
+            print("Nenhum item existente para essa compra.")
+        else:
+            lista_produtos = []
+            for index, item in df.iterrows():
+                lista_produtos.append([item['id_produto'], item['nome'], item['quantidade'], item['preco_unitario'], item['preco_total']])
+            atendimento = Atendimento(compra.id_cliente, compra.data_hora, lista_produtos)
+            emitir_nota_fiscal(atendimento)
+
+def visualizar_clientes_mais_compras(session):
+    conn = session.connection()
+    query = text("select c.nome as cliente, count(cp.id_compra) as quantidade_total_compras from cliente c inner join compra cp on c.id_cliente = cp.id_cliente group by c.id_cliente order by quantidade_total_compras desc limit 5")
+    df = pd.read_sql_query(query, conn)
+    if df.empty:
+        print("Clientes sem compras.")
+    else:
+        print(df.to_string(index=False))
+
+def visualizar_clientes_mais_gasto(session):
+    conn = session.connection()
+    query = text("select c.nome as cliente, sum(i.preco_unitario * i.quantidade) as total_gasto from cliente c inner join compra cp on c.id_cliente = cp.id_cliente inner join item i on cp.id_compra = i.id_compra group by c.id_cliente order by total_gasto desc limit 5")
+    df = pd.read_sql_query(query, conn)
+    if df.empty:
+        print("Clientes sem compras.")
+    else:
+        print(df.to_string(index=False))

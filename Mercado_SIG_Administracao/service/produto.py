@@ -1,4 +1,4 @@
-from Common.crud.produtos import *
+from Common.crud.produto import *
 from Common.menus import *
 from Common.conexao import conectar
 from sqlalchemy import text

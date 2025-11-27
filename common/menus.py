@@ -29,9 +29,11 @@ def menu_administracao():
     ------------------------------
     = 1 - Adm. Produto           =
     ------------------------------
-    = 2 - Resetar Banco de Dados =
+    = 2 - Adm. Cliente           =
     ------------------------------
-    = 3 - Sair do Sistema ADM    =
+    = 3 - Resetar Banco de Dados =
+    ------------------------------
+    = 4 - Sair do Sistema ADM    =
     ==============================
     ''')
 
@@ -104,5 +106,60 @@ def menu_modificar_produto():
     = 2 - Modificar Quantidade   =
     ------------------------------
     = 3 - Modificar Fornecedor   =
+    ==============================
+    ''')
+
+def menu_administracao_cliente():
+    print('''
+    ==============================
+    =      Menu Adm. Cliente     =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Adm. CRUD Dados        =
+    ------------------------------
+    = 2 - Consultar Dados        =
+    ------------------------------
+    = 3 - Sair ADM Cliente       =
+    ==============================
+    ''')
+
+def menu_cliente_CRUD():
+    print('''
+    ==============================
+    =      Menu CRUD Cliente     =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Visualizar Clientes    =
+    ------------------------------
+    = 2 - Visualizar Um Cliente  =
+    ------------------------------
+    = 3 - Resetar Dados Cliente  =
+    ------------------------------
+    = 4 - Sair CRUD Cliente      =
+    ==============================
+    ''')
+
+def menu_cliente_consultas():
+    print('''
+    ==============================
+    =   Menu Consultas Cliente   =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Clientes Com Compras   =
+    ------------------------------
+    = 2 - Clientes Sem Compras   =
+    ------------------------------
+    = 3 - Compras Um Cliente     =
+    ------------------------------
+    = 4 - Info Compra De Cliente =
+    ------------------------------
+    = 5 - Clientes c/Mais Compras=
+    ------------------------------
+    = 6 - Clientes c/Mais Gasto  =
+    ------------------------------
+    = 7 - Sair Consulta Cliente  =
     ==============================
     ''')

@@ -1,5 +1,5 @@
 from Common.util import *
-from Common.crud.produtos import *
+from Common.crud.produto import *
 from Common.models import Atendimento
 from Common.menus import *
 from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
@@ -31,7 +31,7 @@ def adicionar_carrinho(session):
                         if (int(produto_encontrado.quantidade) >= quantidade):
                             dic_produtos[produto_encontrado.id_produto].quantidade = int(produto_encontrado.quantidade) - quantidade
                             preco_total = quantidade * float(produto_encontrado.preco)
-                            produto_comprado = [produto_encontrado.id_produto ,produto_encontrado.nome, quantidade, produto_encontrado.preco, preco_total]
+                            produto_comprado = [produto_encontrado.id_produto, produto_encontrado.nome, quantidade, produto_encontrado.preco, preco_total]
                             produtos_comprados.append(produto_comprado)
                         else:
                             print("Quantidade indisponível no estoque!")
