@@ -4,6 +4,7 @@ from Common.conexao import *
 from Mercado_SIG_Administracao.repository.util_db import *
 from Mercado_SIG_Administracao.service.produto import *
 from Mercado_SIG_Administracao.service.cliente import *
+from Mercado_SIG_Administracao.service.fornecedor import *
 
 def resetar_banco_de_dados(session):
     resetar_estoque(session)
@@ -71,8 +72,10 @@ def selecionar_opcao_administracao(session):
             case 2:
                 selecionar_opcao_administracao_cliente(session)
             case 3:
-                resetar_banco_de_dados(session)
+                selecionar_opcao_administracao_fornecedor(session)
             case 4:
+                resetar_banco_de_dados(session)
+            case 5:
                 sair("Saindo do sistema operacional de estoque...")
                 break
             case _:
@@ -114,6 +117,7 @@ def selecionar_opcao_produto_CRUD(session):
                 deletar_produto(session)
             case 6:
                 resetar_estoque(session)
+                resetar_relacionamento_fornecedor_produto(session)
             case 7:
                 sair("Saindo do sistema de CRUD de produtos...")
                 break
@@ -155,7 +159,7 @@ def selecionar_opcao_administracao_cliente(session):
             case 2:
                 selecionar_opcao_cliente_consulta(session)
             case 3:
-                sair("Saindo do sistema operacional de estoque...")
+                sair("Saindo do sistema operacional de cliente...")
                 break
             case _:
                 print("Opção inválida!")
@@ -200,6 +204,47 @@ def selecionar_opcao_cliente_consulta(session):
                 visualizar_clientes_mais_gasto(session)
             case 7:
                 sair("Saindo do sistema de consultas de clientes...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_administracao_fornecedor(session):
+    menu_administracao_fornecedor()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_administracao_fornecedor()
+            case 1:
+                selecionar_opcao_fornecedor_CRUD(session)
+            case 2:
+                sair("Saindo do sistema operacional de fornecedor...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_fornecedor_CRUD(session):
+    menu_fornecedor_CRUD()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_fornecedor_CRUD()
+            case 1:
+                visualizar_fornecedores(session)
+            case 2:
+                visualizar_fornecedor(session)
+            case 3:
+                adicionar_fornecedor(session)
+            case 4:
+                modificar_fornecedor(session)
+            case 5:
+                deletar_fornecedor(session)
+            case 6:
+                resetar_fornecedores(session)
+                resetar_relacionamento_fornecedor_produto(session)
+            case 7:
+                sair("Saindo do sistema de CRUD de fornecedores...")
                 break
             case _:
                 print("Opção inválida!")

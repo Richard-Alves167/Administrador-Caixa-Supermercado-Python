@@ -1,6 +1,5 @@
 from Common.crud.produto import *
 from Common.menus import *
-from Common.conexao import conectar
 from sqlalchemy import text
 import pandas as pd
 
@@ -26,6 +25,8 @@ def modificar_produto(session):
                 update_produto_preco(session, produto_id)
             case 2:
                 update_produto_quantidade(session, produto_id)
+            case 3:
+                sair("Saindo da opção de modificação de fornecedor...")
             case _:
                 print("Opção inválida!")
     else:

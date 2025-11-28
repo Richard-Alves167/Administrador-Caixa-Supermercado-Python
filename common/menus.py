@@ -31,9 +31,11 @@ def menu_administracao():
     ------------------------------
     = 2 - Adm. Cliente           =
     ------------------------------
-    = 3 - Resetar Banco de Dados =
+    = 3 - Adm. Fornecedor        =
     ------------------------------
-    = 4 - Sair do Sistema ADM    =
+    = 4 - Resetar Banco de Dados =
+    ------------------------------
+    = 5 - Sair do Sistema ADM    =
     ==============================
     ''')
 
@@ -105,7 +107,7 @@ def menu_modificar_produto():
     ------------------------------
     = 2 - Modificar Quantidade   =
     ------------------------------
-    = 3 - Modificar Fornecedor   =
+    = 3 - Sair Opção Modificação =
     ==============================
     ''')
 
@@ -162,4 +164,53 @@ def menu_cliente_consultas():
     ------------------------------
     = 7 - Sair Consulta Cliente  =
     ==============================
+    ''')
+
+def menu_administracao_fornecedor():
+    print('''
+    ==============================
+    =     Menu Adm. Fornecedor   =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Adm. CRUD Dados        =
+    ------------------------------
+    = 2 - Sair ADM Fornecedor    =
+    ==============================
+    ''')
+
+def menu_fornecedor_CRUD():
+    print('''
+    ==============================
+    =     Menu CRUD Fornecedor   =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Visualizar Fornecedores=
+    ------------------------------
+    = 2 - Visualizar Um Fornec.  =
+    ------------------------------
+    = 3 - Adicionar Fornecedor   =
+    ------------------------------
+    = 4 - Modificar Fornecedor   =
+    ------------------------------
+    = 5 - Deletar Fornecedor     =
+    ------------------------------
+    = 6 - Resetar Dados Fornec.  =
+    ------------------------------
+    = 7 - Sair CRUD Fornecedor   =
+    ==============================
+    ''')
+
+def menu_modificar_fornecedor():
+    print('''
+    =================================
+    =       Menu de Modificação     =
+    =================================
+    = 1 - Adicionar Fornec. de Prod.=
+    ---------------------------------
+    = 2 - Retirar Fornec. de Prod.  =
+    ---------------------------------
+    = 3 - Sair Opção Modificação    =
+    =================================
     ''')
