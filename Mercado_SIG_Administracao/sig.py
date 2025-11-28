@@ -218,6 +218,8 @@ def selecionar_opcao_administracao_fornecedor(session):
             case 1:
                 selecionar_opcao_fornecedor_CRUD(session)
             case 2:
+                selecionar_opcao_fornecedor_consulta(session)
+            case 3:
                 sair("Saindo do sistema operacional de fornecedor...")
                 break
             case _:
@@ -245,6 +247,25 @@ def selecionar_opcao_fornecedor_CRUD(session):
                 resetar_relacionamento_fornecedor_produto(session)
             case 7:
                 sair("Saindo do sistema de CRUD de fornecedores...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_fornecedor_consulta(session):
+    menu_fornecedor_consultas()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_fornecedor_consultas()
+            case 1:
+                visualizar_fornecedores_com_produtos(session)
+            case 2:
+                visualizar_fornecedores_sem_produtos(session)
+            case 3:
+                visualizar_produtos_fornecedor(session)
+            case 4:
+                sair("Saindo do sistema de consultas de clientes...")
                 break
             case _:
                 print("Opção inválida!")

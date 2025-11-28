@@ -175,7 +175,9 @@ def menu_administracao_fornecedor():
     ------------------------------
     = 1 - Adm. CRUD Dados        =
     ------------------------------
-    = 2 - Sair ADM Fornecedor    =
+    = 2 - Consultar Dados        =
+    ------------------------------
+    = 3 - Sair ADM Fornecedor    =
     ==============================
     ''')
 
@@ -213,4 +215,21 @@ def menu_modificar_fornecedor():
     ---------------------------------
     = 3 - Sair Opção Modificação    =
     =================================
+    ''')
+
+def menu_fornecedor_consultas():
+    print('''
+    ==============================
+    =  Menu Consultas Fornecedor =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Fornecedores C/ Prod.  =
+    ------------------------------
+    = 2 - Fornecedores S/ Prod.  =
+    ------------------------------
+    = 3 - Prod. de um Fornecedor =
+    ------------------------------
+    = 4 - Sair Consulta Fornec.  =
+    ==============================
     ''')
