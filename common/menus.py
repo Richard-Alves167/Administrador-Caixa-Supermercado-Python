@@ -107,7 +107,9 @@ def menu_modificar_produto():
     ------------------------------
     = 2 - Modificar Quantidade   =
     ------------------------------
-    = 3 - Sair Opção Modificação =
+    = 3 - Modificar Fornecedores =
+    ------------------------------
+    = 4 - Sair Opção Modificação =
     ==============================
     ''')
 
@@ -204,16 +206,16 @@ def menu_fornecedor_CRUD():
     ==============================
     ''')
 
-def menu_modificar_fornecedor():
+def menu_modificar_fornecedor_produto():
     print('''
     =================================
-    =       Menu de Modificação     =
+    =   Menu Produtos Fornecimento  =
     =================================
     = 1 - Adicionar Fornec. de Prod.=
     ---------------------------------
     = 2 - Retirar Fornec. de Prod.  =
     ---------------------------------
-    = 3 - Sair Opção Modificação    =
+    = 3 - Sair Opção Fornecimento   =
     =================================
     ''')
 

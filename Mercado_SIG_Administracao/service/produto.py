@@ -1,5 +1,6 @@
 from Common.crud.produto import *
 from Common.menus import *
+from Mercado_SIG_Administracao.crud.fornecedor_produto import insert_produto_fornecedor, delete_produto_fornecedor
 from sqlalchemy import text
 import pandas as pd
 
@@ -26,11 +27,30 @@ def modificar_produto(session):
             case 2:
                 update_produto_quantidade(session, produto_id)
             case 3:
+                escolher_opcao_atualizar_produto_fornecedor(session, produto_id)
+            case 4:
                 sair("Saindo da opção de modificação de fornecedor...")
             case _:
                 print("Opção inválida!")
     else:
         print("Produto não encontrado")
+
+def escolher_opcao_atualizar_produto_fornecedor(session, produto_id):
+    menu_modificar_fornecedor_produto()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_modificar_fornecedor_produto()
+            case 1:
+                insert_produto_fornecedor(session, produto_id)
+            case 2:
+                delete_produto_fornecedor(session, produto_id)
+            case 3:
+                sair("Saindo do sistema de modificação de fornecedores dos produtos...")
+                break
+            case _:
+                print("Opção inválida!")
 
 def deletar_produto(session):
     produto_id = input("Digite o ID do produto a ser deletado: ")

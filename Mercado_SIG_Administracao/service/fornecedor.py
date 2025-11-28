@@ -1,4 +1,5 @@
 from Mercado_SIG_Administracao.crud.fornecedor import *
+from Mercado_SIG_Administracao.crud.fornecedor_produto import *
 from Common.menus import *
 from sqlalchemy import text
 import pandas as pd
@@ -19,7 +20,7 @@ def modificar_fornecedor(session):
     fornecedor = return_fornecedor(session, fornecedor_id)
     if fornecedor:
         print("Fornecedor encontrado:", fornecedor.nome)
-        menu_modificar_fornecedor()
+        menu_modificar_fornecedor_produto()
         opcao = input_int("Selecione uma opção: ")
         match opcao:
             case 1:

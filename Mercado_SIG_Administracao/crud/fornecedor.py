@@ -1,6 +1,6 @@
 from Common.util import *
 from Common.crud.produto import return_produto
-from Common.models import Fornecedor, Fornecedor_Produto
+from Common.models import Fornecedor
 
 def create_fornecedor():
     '''
@@ -58,37 +58,6 @@ def read_fornecedores(session):
         fornecedores = return_fornecedores(session)
         for fornecedor in fornecedores:
             print(f"{fornecedores[fornecedor].id_fornecedor} - {fornecedores[fornecedor]}")
-    except Exception as e:
-        print("Erro:", e)
-
-def insert_fornecedor_produto(session, fornecedor_id):
-    try:
-        fornecedor = return_fornecedor(session, fornecedor_id)
-        if fornecedor:
-            produto_id = input_int_positivo("Digite o ID do produto: ")
-            produto = return_produto(session, produto_id)
-            if produto and produto_id not in [p.id_produto for p in fornecedor.produtos]:
-                fornecedor_produto = Fornecedor_Produto(int(fornecedor_id), int(produto_id))
-                session.add(fornecedor_produto)
-                session.commit()
-                print("Fornecedor atualizado com sucesso!")
-            else:
-                print("Produto não cadastrado ou já vinculado ao fornecedor.")
-    except Exception as e:
-        print("Erro:", e)
-
-def delete_fornecedor_produto(session, fornecedor_id):
-    try:
-        fornecedor = return_fornecedor(session, fornecedor_id)
-        if fornecedor:
-            produto_id = input_int_positivo("Digite o ID do produto: ")
-            produto = return_produto(session, produto_id)
-            if produto and produto_id in [p.id_produto for p in fornecedor.produtos]:
-                session.delete(session.get(Fornecedor_Produto, (fornecedor_id, produto_id)))
-                session.commit()
-                print("Fornecedor atualizado com sucesso!")
-            else:
-                print("Produto não cadastrado ou não está vinculado ao fornecedor.")
     except Exception as e:
         print("Erro:", e)
 
