@@ -14,6 +14,9 @@ def visualizar_produtos(session):
 def adicionar_produto(session):
     produto = create_produto()
     insert_produto(session, produto)
+    print("Adicionar fornecedores:")
+    insert_produto_fornecedor(session, produto.id_produto)
+    escolher_opcao_atualizar_produto_fornecedor(session, produto.id_produto)
 
 def modificar_produto(session):
     produto_id = input("Digite o ID do produto a ser modificado: ")
