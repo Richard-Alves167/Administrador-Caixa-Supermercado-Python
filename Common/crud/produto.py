@@ -6,14 +6,20 @@ import os.path
 def create_produto():
     '''
     Cria um novo produto.
-    ID | Nome | Quantidade | Preço  
+    ID | Nome | Quantidade | Preço | ID do desconto | Quantidade mínima para desconto. 
     '''
 
     print("Criar produto:")
     nome = input("Nome: ")
     quantidade = input_int_positivo("Quantidade: ")
     preco = input_float_positivo("Preço: ")
-    produto = Produto(nome, quantidade, preco)
+    id_desconto = input("ID do desconto (pressione enter para nenhum): ")
+    quantidade_min_para_desconto = None
+    if id_desconto == "":
+        id_desconto = None
+    else:
+        quantidade_min_para_desconto = input_int_positivo("Quantidade mínima para desconto: ")
+    produto = Produto(nome, quantidade, preco, id_desconto, quantidade_min_para_desconto)
     print("Produto criado com sucesso!")
     return produto
 

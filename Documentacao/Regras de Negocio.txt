@@ -1,0 +1,4 @@
+desconto:
+1 - Clientes VIP que podem ter acesso aos descontos do Sistema
+ou
+2 - (ESCOLHIDO) Todos os Clientes, mas necessitam comprar uma determinada quantidade do produto para ser aplicado o desconto para os itens posteriores adicionados

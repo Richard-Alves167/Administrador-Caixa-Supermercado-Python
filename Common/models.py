@@ -42,6 +42,49 @@ class Compra(Base):
     def __str__(self):
         return f"{self.id_cliente};{self.data_hora}"
     
+def Desconto(Base):
+    '''Classe que representa um desconto com ID, Tier e percentual.'''
+
+    __tablename__ = "desconto"
+
+    id_desconto = Column(Integer, primary_key=True, autoincrement=True)
+    tier = Column(String, nullable=False)
+    percentual = Column(Float, nullable=False)
+    produtos = relationship("Produto", back_populates="desconto", passive_deletes=True)
+    itens_descontados = relationship("Item", back_populates="desconto", passive_deletes=True)
+
+    def __init__(self, tier, percentual):
+        self.tier = tier
+        self.percentual = percentual
+
+    def __str__(self):
+        return f"{self.id_desconto};{self.tier};{self.percentual}"
+
+class Produto(Base):
+    '''Classe que representa um produto com ID, nome, quantidade e preço.'''
+
+    __tablename__ = "produto"
+
+    id_produto = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String, nullable=False)
+    quantidade = Column(Integer, nullable=False)
+    preco = Column(Float, nullable=False) 
+    id_quantidade_min_para_desconto = Column(Integer, nullable=True)
+    id_desconto = Column(Integer, ForeignKey("desconto.id_desconto", ondelete='SET NULL'))
+    desconto = relationship("Desconto", back_populates="itens_descontados")
+    vendas = relationship("Item", cascade="all, delete")
+    fornecedores = relationship("Fornecedor", secondary="fornecedor_produto", back_populates="produtos")
+
+    def __init__(self, nome, quantidade, preco, id_desconto=1, quantidade_min_para_desconto=5):
+        self.nome = nome
+        self.quantidade = quantidade
+        self.preco = preco
+        self.id_desconto = id_desconto
+        self.id_quantidade_min_para_desconto = quantidade_min_para_desconto
+
+    def __str__(self):
+        return f"{self.nome};{self.quantidade};{self.preco};{self.id_desconto};{self.id_quantidade_min_para_desconto}"
+
 class Item(Base):
     '''Classe que representa um item de uma compra com ID, ID da compra ID do produto, quantidade comprada, preço do produto na hora da compra.'''
 
@@ -50,10 +93,13 @@ class Item(Base):
     id_item = Column(Integer, primary_key=True, autoincrement=True)
     quantidade = Column(Integer, nullable=False)
     preco_unitario = Column(Float, nullable=False)
+    id_quantidade_min_para_desconto = Column(Integer, nullable=True)
     id_compra = Column(Integer, ForeignKey("compra.id_compra"))
     id_produto = Column(Integer, ForeignKey("produto.id_produto"))
+    id_desconto = Column(Integer, ForeignKey("desconto.id_desconto"), nullable=True)
     compra = relationship("Compra", back_populates="itens")
     venda = relationship("Produto", back_populates="vendas")
+    desconto = relationship("Desconto", back_populates="itens_descontados", passive_deletes=True)
 
     def __init__(self, id_compra, id_produto, quantidade, preco_unitario):
         self.id_compra = id_compra
@@ -63,26 +109,6 @@ class Item(Base):
 
     def __str__(self):
         return f"{self.id_cliente};{self.id_compra};{self.id_item};{self.id_produto};{self.quantidade};{self.preco_unitario}"
-    
-class Produto(Base):
-    '''Classe que representa um produto com ID, nome, quantidade e preço.'''
-
-    __tablename__ = "produto"
-
-    id_produto = Column(Integer, primary_key=True, autoincrement=True)
-    nome = Column(String, nullable=False)
-    quantidade = Column(Integer, nullable=False)
-    preco = Column(Float, nullable=False)
-    vendas = relationship("Item", cascade="all, delete")
-    fornecedores = relationship("Fornecedor", secondary="fornecedor_produto", back_populates="produtos", cascade="all, delete")
-
-    def __init__(self, nome, quantidade, preco):
-        self.nome = nome
-        self.quantidade = quantidade
-        self.preco = preco
-
-    def __str__(self):
-        return f"{self.nome};{self.quantidade};{self.preco}"
     
 class Fornecedor(Base):
     '''Classe que representa um fornecedor com ID e nome.'''
