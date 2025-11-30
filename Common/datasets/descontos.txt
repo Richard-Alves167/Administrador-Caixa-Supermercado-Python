@@ -1,0 +1,6 @@
+bronze,0.05
+prata,0.10
+ouro,0.20
+esmeralda,0.30
+rubi,0.40
+diamante,0.50

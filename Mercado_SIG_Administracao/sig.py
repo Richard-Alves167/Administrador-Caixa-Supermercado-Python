@@ -3,6 +3,7 @@ from Common.menus import *
 from Common.conexao import *
 from Mercado_SIG_Administracao.database_config.cliente import *
 from Mercado_SIG_Administracao.database_config.produto import *
+from Mercado_SIG_Administracao.database_config.desconto import *
 from Mercado_SIG_Administracao.database_config.fornecedor import *
 from Mercado_SIG_Administracao.database_config.fornecedor_produto import *
 from Mercado_SIG_Administracao.database_config.compra import *
@@ -12,12 +13,21 @@ from Mercado_SIG_Administracao.service.produto import *
 from Mercado_SIG_Administracao.service.fornecedor import *
 
 def resetar_banco_de_dados(session):
-    resetar_estoque(session)
     resetar_clientes(session)
+    resetar_descontos(session)
+    resetar_estoque(session)
     resetar_fornecedores(session)
     resetar_relacionamento_fornecedor_produto(session)
     resetar_compras(session)
     resetar_itens(session)
+
+def resetar_descontos(session):
+    deletar_arquivo_descontos()
+    mocki_arquivo_descontos()
+    resetar_tabela_desconto()
+    criar_tabela_desconto()
+    mocki_descontos(session)
+    print("Descontos resetados com sucesso!\n")
 
 def resetar_estoque(session):
     deletar_arquivo_produtos()

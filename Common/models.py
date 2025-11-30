@@ -42,7 +42,7 @@ class Compra(Base):
     def __str__(self):
         return f"{self.id_cliente};{self.data_hora}"
     
-def Desconto(Base):
+class Desconto(Base):
     '''Classe que representa um desconto com ID, Tier e percentual.'''
 
     __tablename__ = "desconto"
@@ -71,7 +71,7 @@ class Produto(Base):
     preco = Column(Float, nullable=False) 
     id_quantidade_min_para_desconto = Column(Integer, nullable=True)
     id_desconto = Column(Integer, ForeignKey("desconto.id_desconto", ondelete='SET NULL'))
-    desconto = relationship("Desconto", back_populates="itens_descontados")
+    desconto = relationship("Desconto", back_populates="produtos")
     vendas = relationship("Item", cascade="all, delete")
     fornecedores = relationship("Fornecedor", secondary="fornecedor_produto", back_populates="produtos")
 
