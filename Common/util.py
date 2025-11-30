@@ -20,6 +20,18 @@ def input_int_positivo(msg):
             print("Valor inválido!\nTente novamente...")
     return valor
 
+def input_int_positivo_entre_1_e_100(msg):
+    parar_loop = False
+    while(not parar_loop):
+        try:
+            valor = int(input(msg))
+            if (valor <= 0 or valor > 100):
+                raise ValueError("Error: número fora dos limites de porcentagem")
+            parar_loop = True
+        except:
+            print("Valor inválido!\nTente novamente...")
+    return valor
+
 def input_float(msg):
     parar_loop = False
     while(not parar_loop):

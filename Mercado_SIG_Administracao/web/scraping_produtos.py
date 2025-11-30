@@ -1,3 +1,4 @@
+from Mercado_SIG_Administracao.web.desconto_transform import transformar_desconto_texto_para_id
 from Common.models import Produto
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
@@ -32,7 +33,9 @@ def obter_lista_produtos(bs):
             nome_produto = produto.find('h5',class_='card-title').get_text().strip()
             preco_produto = float(produto.find('p',class_='card-price').get_text().replace('Valor:','').replace('R$','').replace(',','.').strip())
             quantidade_produto = int(produto.find('p', attrs={'data-qtd':True}).get_text().replace('Disponível:','').replace('un.','').strip())
-            lista_produtos.append(Produto(nome_produto, quantidade_produto, preco_produto))
+            texto_desconto = produto.find_all('p')[0].find('span').get_text().strip().lower()
+            desconto = transformar_desconto_texto_para_id(texto_desconto)
+            lista_produtos.append(Produto(nome_produto, quantidade_produto, preco_produto, desconto))
     except Exception as ex:
         print(ex)
         exit()
