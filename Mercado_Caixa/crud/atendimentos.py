@@ -1,5 +1,6 @@
 from Common.util import *
 from Common.crud.produto import *
+from Common.crud.desconto import *
 from Common.models import Atendimento
 from Common.menus import *
 from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
@@ -17,6 +18,22 @@ def create_atendimento(session, id_cliente):
     atendimento = Atendimento(id_cliente, data, produtos_comprados)
     return atendimento
 
+def calcular_preco_subtotal(quantidade, preco_unitario):
+    subtotal = quantidade * preco_unitario
+    return subtotal
+
+def calcular_desconto(session, quantidade_comprada, quantidade_minima, preco_unitario, id_desconto):
+    if id_desconto != None and quantidade_comprada > quantidade_minima:
+        desconto = return_desconto(session, id_desconto)
+        percentual = desconto.percentual
+        desconto = (quantidade_comprada - quantidade_minima) * preco_unitario * percentual
+        return desconto, percentual
+    return 0, 0
+
+def calcular_preco_total(subtotal, desconto):
+    total = subtotal - desconto
+    return total
+
 def adicionar_carrinho(session):
     dic_produtos = return_produtos(session)
     produtos_comprados = []
@@ -30,8 +47,10 @@ def adicionar_carrinho(session):
                         quantidade = input_int_positivo("Quantidade: ")
                         if (int(produto_encontrado.quantidade) >= quantidade):
                             dic_produtos[produto_encontrado.id_produto].quantidade = int(produto_encontrado.quantidade) - quantidade
-                            preco_total = quantidade * float(produto_encontrado.preco)
-                            produto_comprado = [produto_encontrado.id_produto, produto_encontrado.nome, quantidade, produto_encontrado.preco, preco_total]
+                            preco_subtotal = calcular_preco_subtotal(quantidade, float(produto_encontrado.preco))
+                            desconto_total, percentual = calcular_desconto(session, quantidade, produto_encontrado.quantidade_min_para_desconto, produto_encontrado.preco, produto_encontrado.id_desconto)
+                            preco_total = calcular_preco_total(preco_subtotal, desconto_total)
+                            produto_comprado = [produto_encontrado.id_produto, produto_encontrado.nome, quantidade, produto_encontrado.preco, produto_encontrado.id_desconto, produto_encontrado.quantidade_min_para_desconto, percentual, preco_subtotal, desconto_total, preco_total]
                             produtos_comprados.append(produto_comprado)
                         else:
                             print("Quantidade indisponível no estoque!")

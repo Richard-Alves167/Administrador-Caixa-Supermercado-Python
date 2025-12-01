@@ -12,20 +12,28 @@ def emitir_nota_fiscal(atendimento):
     cliente = atendimento.id_cliente
     data = atendimento.data_criacao
     contador = 1
+    desconto = 0
+    subtotal = 0
     total = 0
     itens_produto = atendimento.carrinho_produtos
+    itens_tabela = []
     for item in itens_produto:
-        total += item[4]
+        itens_tabela.append([item[0], item[1], item[2], item[3], item[7], item[8], item[9]])
+        subtotal += item[7]
+        desconto += item[8]
+        total += item[9]
         contador += 1
 
     print(f"\nCLiente {cliente}")
     print(f"Data: {data}")
     print()
-    cabecalho = ["Item", "Produto", "Quant."," Preço", "Total"]
-    print(tabulate(itens_produto, headers=cabecalho))
+    cabecalho = ["Item", "Produto", "Quant."," Preço", "SubTotal", "Desconto", "Total"]
+    print(tabulate(itens_tabela, headers=cabecalho))
     print()
     print(f"Itens: {len(itens_produto)}")
-    print(f"Total: {total:.2f}")
+    print(f"SubTotal: {subtotal:.2f}")
+    print(f"Desconto: {desconto:.2f}")
+    print(f"Total: {total:.2f}\n")
 
 def abrir_caixa(session):
     lista_atendimentos = []
@@ -50,7 +58,7 @@ def emitir_nota_clientes_atendidos(lista_atendimentos):
     lista_clientes_separados = []
     for atendimento in lista_atendimentos:
         nome_cliente = f"Cliente {atendimento.id_cliente}"
-        total_cliente = sum([item[4] for item in atendimento.carrinho_produtos])
+        total_cliente = sum([item[9] for item in atendimento.carrinho_produtos])
         lista_clientes_separados.append([nome_cliente, total_cliente])
     total = sum([cliente[1] for cliente in lista_clientes_separados])
 

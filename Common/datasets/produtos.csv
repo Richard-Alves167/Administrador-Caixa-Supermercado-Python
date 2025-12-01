@@ -1,21 +1,21 @@
-nome;quantidade;preco
-Veja Gold 500ml;3;6.59;1;5
-PANETTONE BAUDUCCO 400g;7;28.95;3;5
-Leite Em Pó Ninho Integral Lata 380g;3;17.7;1;5
-Azeite de Oliva Gallo 500ml;2;29.99;1;5
-Cerveja Heineken Premium Garrafa 6 Long Neck 330ml;4;47.8;3;5
-Escova Dental Macia Infusão de Carvão Colgate;3;11.8;3;5
-Água De Coco Esterilizada Kero Coco 1L;2;14.25;3;5
-Amaciante Downy Concentrado 3L;1;42.98;2;5
-Picanha Resfriada Maturatta Friboi 1kg;1;98.9;2;5
-Café Torrado e Moído Tradicional Melitta 500g;4;33.9;3;5
-Batata Frita Ondulada Original Elma Chips Ruffles Pacote 115g;4;12.33;2;5
-Arroz Agulhinha Longo Fino Tipo 1 TIO JOÃO 2kg;2;15.29;1;5
-Salgadinho Batata Frita Pringles® Original 104g;4;11.98;3;5
-Água Mineral Minalba Sem Gás 510ml C/ 12 Un;4;23.9;2;5
-Refrigerante sem Açúcar Coca-Cola Zero 2L;4;9.89;3;5
-Pão de Forma Panco Premium Pacote 500g;4;11.5;1;5
-Salgadinho Batata Frita Pringles® Creme & Cebola 109g;6;9.8;1;5
-Papel Higiênico Folha Dupla Neutro Personal;5;14.99;2;5
-Ketchup Heinz Tradicional 1,033KG;3;21.99;3;5
-Arroz Branco Tipo 1 Qualitá Pacote 2kg;7;12.7;1;5
+nome;quantidade;preco;id_desconto;quantidade_min_para_desconto
+Veja Gold 500ml;3;6.59;1;3
+PANETTONE BAUDUCCO 400g;7;28.95;3;3
+Leite Em Pó Ninho Integral Lata 380g;3;17.7;1;3
+Azeite de Oliva Gallo 500ml;2;29.99;1;3
+Cerveja Heineken Premium Garrafa 6 Long Neck 330ml;4;47.8;3;3
+Escova Dental Macia Infusão de Carvão Colgate;3;11.8;3;3
+Água De Coco Esterilizada Kero Coco 1L;2;14.25;3;3
+Amaciante Downy Concentrado 3L;1;42.98;2;3
+Picanha Resfriada Maturatta Friboi 1kg;1;98.9;2;3
+Café Torrado e Moído Tradicional Melitta 500g;4;33.9;3;3
+Batata Frita Ondulada Original Elma Chips Ruffles Pacote 115g;4;12.33;2;3
+Arroz Agulhinha Longo Fino Tipo 1 TIO JOÃO 2kg;2;15.29;1;3
+Salgadinho Batata Frita Pringles® Original 104g;4;11.98;3;3
+Água Mineral Minalba Sem Gás 510ml C/ 12 Un;4;23.9;2;3
+Refrigerante sem Açúcar Coca-Cola Zero 2L;4;9.89;3;3
+Pão de Forma Panco Premium Pacote 500g;4;11.5;1;3
+Salgadinho Batata Frita Pringles® Creme & Cebola 109g;6;9.8;1;3
+Papel Higiênico Folha Dupla Neutro Personal;5;14.99;2;3
+Ketchup Heinz Tradicional 1,033KG;3;21.99;3;3
+Arroz Branco Tipo 1 Qualitá Pacote 2kg;7;12.7;1;3

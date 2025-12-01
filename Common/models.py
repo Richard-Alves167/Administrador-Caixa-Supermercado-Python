@@ -69,31 +69,31 @@ class Produto(Base):
     nome = Column(String, nullable=False)
     quantidade = Column(Integer, nullable=False)
     preco = Column(Float, nullable=False) 
-    id_quantidade_min_para_desconto = Column(Integer, nullable=True)
+    quantidade_min_para_desconto = Column(Integer, nullable=True)
     id_desconto = Column(Integer, ForeignKey("desconto.id_desconto", ondelete='SET NULL'))
     desconto = relationship("Desconto", back_populates="produtos")
     vendas = relationship("Item", cascade="all, delete")
     fornecedores = relationship("Fornecedor", secondary="fornecedor_produto", back_populates="produtos")
 
-    def __init__(self, nome, quantidade, preco, id_desconto=1, quantidade_min_para_desconto=5):
+    def __init__(self, nome, quantidade, preco, id_desconto=None, quantidade_min_para_desconto=3):
         self.nome = nome
         self.quantidade = quantidade
         self.preco = preco
         self.id_desconto = id_desconto
-        self.id_quantidade_min_para_desconto = quantidade_min_para_desconto
+        self.quantidade_min_para_desconto = quantidade_min_para_desconto
 
     def __str__(self):
-        return f"{self.nome};{self.quantidade};{self.preco};{self.id_desconto};{self.id_quantidade_min_para_desconto}"
+        return f"{self.nome};{self.quantidade};{self.preco};{self.id_desconto};{self.quantidade_min_para_desconto}"
 
 class Item(Base):
-    '''Classe que representa um item de uma compra com ID, ID da compra ID do produto, quantidade comprada, preço do produto na hora da compra.'''
+    '''Classe que representa um item de uma compra com ID, ID da compra ID do produto, quantidade comprada, preço do produto na hora da compra, desconto do produto na hora da compra e quantidade minima para ter desconto na hora da compra.'''
 
     __tablename__ = "item"
 
     id_item = Column(Integer, primary_key=True, autoincrement=True)
     quantidade = Column(Integer, nullable=False)
     preco_unitario = Column(Float, nullable=False)
-    id_quantidade_min_para_desconto = Column(Integer, nullable=True)
+    quantidade_min_para_desconto = Column(Integer, nullable=True)
     id_compra = Column(Integer, ForeignKey("compra.id_compra"))
     id_produto = Column(Integer, ForeignKey("produto.id_produto"))
     id_desconto = Column(Integer, ForeignKey("desconto.id_desconto"), nullable=True)
@@ -101,14 +101,16 @@ class Item(Base):
     venda = relationship("Produto", back_populates="vendas")
     desconto = relationship("Desconto", back_populates="itens_descontados", passive_deletes=True)
 
-    def __init__(self, id_compra, id_produto, quantidade, preco_unitario):
+    def __init__(self, id_compra, id_produto, quantidade, preco_unitario, id_desconto, quantidade_min_para_desconto):
         self.id_compra = id_compra
         self.id_produto = id_produto
         self.quantidade = quantidade
         self.preco_unitario = preco_unitario
+        self.id_desconto = id_desconto
+        self.quantidade_min_para_desconto = quantidade_min_para_desconto
 
     def __str__(self):
-        return f"{self.id_cliente};{self.id_compra};{self.id_item};{self.id_produto};{self.quantidade};{self.preco_unitario}"
+        return f"{self.id_cliente};{self.id_compra};{self.id_item};{self.id_produto};{self.quantidade};{self.preco_unitario};{self.id_desconto};{self.quantidade_min_para_desconto}"
     
 class Fornecedor(Base):
     '''Classe que representa um fornecedor com ID e nome.'''
