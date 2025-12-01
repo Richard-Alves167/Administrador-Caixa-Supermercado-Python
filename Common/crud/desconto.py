@@ -1,7 +1,7 @@
 from Common.models import Desconto
 from Common.util import *
 
-def create_desconto(id_desconto):
+def create_desconto():
     '''
     Cria um novo desconto.
     ID | Tier | Percentual 

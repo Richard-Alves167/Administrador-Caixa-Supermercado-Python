@@ -29,13 +29,15 @@ def menu_administracao():
     ------------------------------
     = 1 - Adm. Produto           =
     ------------------------------
-    = 2 - Adm. Cliente           =
+    = 2 - Adm. Desconto          =
     ------------------------------
-    = 3 - Adm. Fornecedor        =
+    = 3 - Adm. Cliente           =
     ------------------------------
-    = 4 - Resetar Banco de Dados =
+    = 4 - Adm. Fornecedor        =
     ------------------------------
-    = 5 - Sair do Sistema ADM    =
+    = 5 - Resetar Banco de Dados =
+    ------------------------------
+    = 6 - Sair do Sistema ADM    =
     ==============================
     ''')
 
@@ -112,6 +114,58 @@ def menu_modificar_produto():
     = 4 - Sair Opção Modificação =
     ==============================
     ''')
+
+def menu_administracao_desconto():
+    print('''
+    ==============================
+    =      Menu Adm. Desconto    =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Adm. CRUD Dados        =
+    ------------------------------
+    = 2 - Consultar Dados        =
+    ------------------------------
+    = 3 - Sair ADM Desconto      =
+    ==============================
+    ''')
+
+def menu_desconto_CRUD():
+    print('''
+    ==============================
+    =      Menu CRUD Desconto    =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Visualizar Descontos   =
+    ------------------------------
+    = 2 - Visualizar Um Desconto =
+    ------------------------------
+    = 3 - Adicionar Desconto     =
+    ------------------------------
+    = 4 - Resetar Dados Desconto =
+    ------------------------------
+    = 5 - Sair CRUD Desconto     =
+    ==============================
+    ''')
+
+def menu_desconto_consultas():
+    print('''
+    ==============================
+    =   Menu Consultas Desconto  =
+    ==============================
+    = 0 - Visualizar MENU        =
+    ------------------------------
+    = 1 - Descontos Com Produto  =
+    ------------------------------
+    = 2 - Descontos Sem Produto  =
+    ------------------------------
+    = 3 - Produtos de Um Desconto=
+    ------------------------------
+    = 4 - Sair Consulta Desconto =
+    ==============================
+    ''')
+
 
 def menu_administracao_cliente():
     print('''

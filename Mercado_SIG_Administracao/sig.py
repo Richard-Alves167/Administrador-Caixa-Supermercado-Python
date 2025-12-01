@@ -9,6 +9,7 @@ from Mercado_SIG_Administracao.database_config.fornecedor_produto import *
 from Mercado_SIG_Administracao.database_config.compra import *
 from Mercado_SIG_Administracao.database_config.item import *
 from Mercado_SIG_Administracao.service.cliente import *
+from Mercado_SIG_Administracao.service.desconto import *
 from Mercado_SIG_Administracao.service.produto import *
 from Mercado_SIG_Administracao.service.fornecedor import *
 
@@ -18,8 +19,8 @@ def resetar_banco_de_dados(session):
     resetar_estoque(session)
     resetar_fornecedores(session)
     resetar_relacionamento_fornecedor_produto(session)
-    resetar_compras(session)
-    resetar_itens(session)
+    resetar_compras()
+    resetar_itens()
 
 def resetar_descontos(session):
     deletar_arquivo_descontos()
@@ -45,12 +46,12 @@ def resetar_clientes(session):
     mocki_clientes(session)
     print("Clientes resetados com sucesso!\n")
 
-def resetar_compras(session):
+def resetar_compras():
     resetar_tabela_compra()
     criar_tabela_compra()
     print("Compras resetados com sucesso!\n")
     
-def resetar_itens(session):
+def resetar_itens():
     resetar_tabela_item()
     criar_tabela_item()
     print("Itens resetados com sucesso!\n")
@@ -85,12 +86,14 @@ def selecionar_opcao_administracao(session):
             case 1:
                 selecionar_opcao_administracao_produto(session)
             case 2:
-                selecionar_opcao_administracao_cliente(session)
+                selecionar_opcao_administracao_desconto(session)
             case 3:
-                selecionar_opcao_administracao_fornecedor(session)
+                selecionar_opcao_administracao_cliente(session)
             case 4:
-                resetar_banco_de_dados(session)
+                selecionar_opcao_administracao_fornecedor(session)
             case 5:
+                resetar_banco_de_dados(session)
+            case 6:
                 sair("Saindo do sistema operacional de estoque...")
                 break
             case _:
@@ -158,6 +161,63 @@ def selecionar_opcao_produto_consulta(session):
                 visualizar_produtos_sem_fornecedores(session)
             case 6:
                 sair("Saindo do sistema de consultas de produtos...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_administracao_desconto(session):
+    menu_administracao_desconto()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_administracao_desconto()
+            case 1:
+                selecionar_opcao_desconto_CRUD(session)
+            case 2:
+                selecionar_opcao_desconto_consulta(session)
+            case 3:
+                sair("Saindo do sistema operacional de desconto...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_desconto_CRUD(session):
+    menu_desconto_CRUD()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_desconto_CRUD()
+            case 1:
+                visualizar_descontos(session)
+            case 2:
+                visualizar_desconto(session)
+            case 3:
+                adicionar_desconto(session)
+            case 4:
+                resetar_descontos(session)
+            case 5:
+                sair("Saindo do sistema de CRUD de descontos...")
+                break
+            case _:
+                print("Opção inválida!")
+
+def selecionar_opcao_desconto_consulta(session):
+    menu_desconto_consultas()
+    while(True):
+        opcao = input_int("\nSelecione uma opção: ")
+        match opcao:
+            case 0:
+                menu_desconto_consultas()
+            case 1:
+                visualizar_desconto_com_produtos(session)
+            case 2:
+                visualizar_desconto_sem_produtos(session)
+            case 3:
+                visualizar_produtos_desconto(session)
+            case 4:
+                sair("Saindo do sistema de consultas de descontos...")
                 break
             case _:
                 print("Opção inválida!")
