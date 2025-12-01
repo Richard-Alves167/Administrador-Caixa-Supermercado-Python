@@ -3,6 +3,7 @@ from Common.crud.produto import *
 from Common.crud.desconto import *
 from Common.models import Atendimento
 from Common.menus import *
+from Common.log import *
 from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
 from datetime import *
 
@@ -47,6 +48,7 @@ def adicionar_carrinho(session):
                         quantidade = input_int_positivo("Quantidade: ")
                         if (int(produto_encontrado.quantidade) >= quantidade):
                             dic_produtos[produto_encontrado.id_produto].quantidade = int(produto_encontrado.quantidade) - quantidade
+                            if dic_produtos[produto_encontrado.id_produto].quantidade == 0: criar_log_falta_estoque(produto_encontrado.id_produto, produto_encontrado.nome)
                             preco_subtotal = calcular_preco_subtotal(quantidade, float(produto_encontrado.preco))
                             desconto_total, percentual = calcular_desconto(session, quantidade, produto_encontrado.quantidade_min_para_desconto, produto_encontrado.preco, produto_encontrado.id_desconto)
                             preco_total = calcular_preco_total(preco_subtotal, desconto_total)

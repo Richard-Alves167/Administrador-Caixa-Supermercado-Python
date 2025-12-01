@@ -1,7 +1,7 @@
 from Common.util import *
 from Common.models import Produto
+from Common.log import *
 from datetime import *
-import os.path
 
 def create_produto():
     '''
@@ -74,10 +74,12 @@ def update_produto_preco(session, produto_id):
     try:
         produto = return_produto(session, produto_id)
         if produto:
+            antigo_preco = produto.preco
             novo_preco = input_float_positivo("Novo preço: ")
             session.query(Produto).filter(Produto.id_produto == produto_id).update({"preco": novo_preco})
             session.commit()
             print("Produto atualizado com sucesso!")
+            criar_log_atualizacao_preco(produto.id_produto, produto.nome, antigo_preco, novo_preco)
     except Exception as e:
         print("Erro:", e)
 
