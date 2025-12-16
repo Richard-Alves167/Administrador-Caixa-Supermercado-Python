@@ -53,6 +53,16 @@ def return_produtos(session):
         print("Erro:", e)
     return produtos_dic
 
+def return_produto_estoque(session):
+    produtos_dic = {}
+    try:
+        produtos = session.query(Produto).all()
+        for produto in produtos:
+            produtos_dic[produto.id_produto] = produto.quantidade
+    except Exception as e:
+        print("Erro:", e)
+    return produtos_dic
+
 def read_produto(session, produto_id):
     try:
         produto = return_produto(session, produto_id)
@@ -108,7 +118,7 @@ def update_estoque(session, carrinho_produtos):
     try:
         for item in carrinho_produtos:
             produto = session.query(Produto).get(item[0])
-            produto.quantidade - item[2]
+            produto.quantidade -= item[2]
         session.commit()
         print("Estoque atualizado com sucesso!")
     except Exception as e:

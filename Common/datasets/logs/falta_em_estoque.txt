@@ -1,2 +1,6 @@
 01/12/2025 00:06 -> Estoque esgotado: ID: 2 - PANETTONE BAUDUCCO 400g
 01/12/2025 00:06 -> Estoque esgotado: ID: 3 - Leite Em Pó Ninho Integral Lata 380g
+15/12/2025 23:49 -> Estoque esgotado: ID: 1 - Veja Gold 500ml
+15/12/2025 23:57 -> Estoque esgotado: ID: 1 - Veja Gold 500ml
+15/12/2025 23:57 -> Estoque esgotado: ID: 11 - Batata Frita Ondulada Original Elma Chips Ruffles Pacote 115g
+15/12/2025 23:57 -> Estoque esgotado: ID: 15 - Refrigerante sem Açúcar Coca-Cola Zero 2L
