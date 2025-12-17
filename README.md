@@ -1,7 +1,8 @@
 # Projeto de Conclusão de disciplina Python e Dados.
 <img src='Banner_Caixa_Supermercado.jpg'>
 
-## 🛒 Projeto Sistema de Caixa e Administração de Supermercado – Este projeto é um sistema de supermercado desenvolvido em Python, 
+## 🛒 Projeto Sistema de Caixa e Administração de Supermercado 
+Este projeto é um sistema de supermercado desenvolvido em Python, 
 que simula tanto o caixa (checkout de compras) quanto a administração/gestão do mercado. Ele foi criado com foco em boas práticas, 
 orientação a objetos, persistência de dados e análise de informações, servindo como um projeto de estudo e portfólio.
 
