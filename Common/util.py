@@ -1,4 +1,6 @@
 from tabulate import tabulate
+import pandas as pd
+from sqlalchemy import text
 
 def input_int(msg):
     parar_loop = False
@@ -92,6 +94,24 @@ def visualizar_total_abaixo_dataframe_tabulate_fancy_grid(dataframe, cliente, to
     print(topo_texto)
     print(meio_texto)
     print(base_texto)
+
+def visualizar_dataframe_todos_dados_tabela(session, nome_tabela):
+    conn = session.connection()
+    query = f"select * from {nome_tabela}"
+    df = pd.read_sql_query(query, conn)
+    if df.empty:
+        print(f"Nenhum dado encontrado na tabela {nome_tabela}.")
+    else:
+        visualizar_dataframe_tabulate_fancy_grid(df, f"Tabela {nome_tabela}")
+
+def visualizar_dataframe_um_dado_tabela(session, nome_tabela, id):
+    conn = session.connection()
+    query = f"select * from {nome_tabela} where id_{nome_tabela} = :id"
+    df = pd.read_sql_query(query, conn, params={"id": id})
+    if df.empty:
+        print(f"Nenhum dado encontrado com id {id} na tabela {nome_tabela}.")
+    else:
+        visualizar_dataframe_tabulate_fancy_grid(df, f"{nome_tabela} de id {id}")
 
 def sair(frase):
     print(frase)

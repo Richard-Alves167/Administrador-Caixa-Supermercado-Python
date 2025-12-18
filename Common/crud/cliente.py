@@ -36,7 +36,7 @@ def read_cliente(session, id_cliente):
     try:
         cliente = return_cliente(session, id_cliente)
         if cliente:
-            print(f"{cliente.id_cliente},{cliente.nome}")
+            visualizar_dataframe_um_dado_tabela(session, "cliente", id_cliente)
         else:
             print("Cliente não encontrado.")
     except Exception as e:
@@ -45,8 +45,6 @@ def read_cliente(session, id_cliente):
 def read_clientes(session):
     print("Listar clientes")
     try:
-        clientes = session.query(Cliente).all()
-        for cliente in clientes:
-            print(f"{cliente.id_cliente},{cliente.nome}")
+        visualizar_dataframe_todos_dados_tabela(session, "cliente")
     except Exception as e:
         print("Erro:", e)

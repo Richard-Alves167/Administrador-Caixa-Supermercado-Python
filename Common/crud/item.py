@@ -45,15 +45,13 @@ def read_item(session, item_id):
     try:
         item = return_item(session, item_id)
         if item:
-            print("Item encontrada: ", item)
+            visualizar_dataframe_um_dado_tabela(session, "item", item_id)
     except Exception as e:
         print("Erro:", e)
 
 def read_itens(session):
     print("Listar itens")
     try:
-        itens = return_itens(session)
-        for item in itens:
-            print(f"{itens[item].item} - {itens[item]}")
+        visualizar_dataframe_todos_dados_tabela(session, "item")
     except Exception as e:
         print("Erro:", e)

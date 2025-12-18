@@ -67,16 +67,14 @@ def read_produto(session, produto_id):
     try:
         produto = return_produto(session, produto_id)
         if produto:
-            print("Produto encontrado: ", produto)
+            visualizar_dataframe_um_dado_tabela(session, "produto", produto_id)
     except Exception as e:
         print("Erro:", e)
 
 def read_produtos(session):
     print("Listar produtos")
     try:
-        produtos = return_produtos(session)
-        for produto in produtos:
-            print(f"{produtos[produto].id_produto} - {produtos[produto]}")
+        visualizar_dataframe_todos_dados_tabela(session, "produto")
     except Exception as e:
         print("Erro:", e)
 

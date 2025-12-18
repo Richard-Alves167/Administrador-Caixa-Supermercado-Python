@@ -38,7 +38,7 @@ def read_desconto(session, id_desconto):
     try:
         desconto = return_desconto(session, id_desconto)
         if desconto:
-            print(f"{desconto.id_desconto},{desconto.tier},{desconto.percentual}")
+            visualizar_dataframe_um_dado_tabela(session, "desconto", id_desconto)
         else:
             print("Desconto não encontrado.")
     except Exception as e:
@@ -47,9 +47,7 @@ def read_desconto(session, id_desconto):
 def read_descontos(session):
     print("Listar descontos")
     try:
-        descontos = session.query(Desconto).all()
-        for desconto in descontos:
-            print(f"{desconto.id_desconto},{desconto.tier},{desconto.percentual}")
+        visualizar_dataframe_todos_dados_tabela(session, "desconto")
     except Exception as e:
         print("Erro:", e)
 

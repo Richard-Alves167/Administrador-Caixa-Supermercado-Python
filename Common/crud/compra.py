@@ -44,15 +44,13 @@ def read_compra(session, compra_id):
     try:
         compra = return_compra(session, compra_id)
         if compra:
-            print("Compra encontrada: ", compra)
+            visualizar_dataframe_um_dado_tabela(session, "compra", compra_id)
     except Exception as e:
         print("Erro:", e)
 
 def read_compras(session):
     print("Listar compras")
     try:
-        compras = return_compras(session)
-        for compra in compras:
-            print(f"{compras[compra].id_compra} - {compras[compra]}")
+        visualizar_dataframe_todos_dados_tabela(session, "compra")
     except Exception as e:
         print("Erro:", e)

@@ -48,16 +48,14 @@ def read_fornecedor(session, fornecedor_id):
     try:
         fornecedor = return_fornecedor(session, fornecedor_id)
         if fornecedor:
-            print("Fornecedor encontrado: ", fornecedor)
+            visualizar_dataframe_um_dado_tabela(session, "fornecedor", fornecedor_id)
     except Exception as e:
         print("Erro:", e)
 
 def read_fornecedores(session):
     print("Listar fornecedores")
     try:
-        fornecedores = return_fornecedores(session)
-        for fornecedor in fornecedores:
-            print(f"{fornecedores[fornecedor].id_fornecedor} - {fornecedores[fornecedor]}")
+        visualizar_dataframe_todos_dados_tabela(session, "fornecedor")
     except Exception as e:
         print("Erro:", e)
 
