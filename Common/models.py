@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
+#from Mercado_Caixa.service.carrinho import calcular_preco_subtotal, calcular_desconto, calcular_preco_total
 
 Base = declarative_base()
 
@@ -151,4 +152,35 @@ class Atendimento():
         self.carrinho_produtos = carrinho_produtos
 
     def __str__(self):
-        return f"{self.id_cliente};{self.data_hora};{self.carrinho_produtos}"
+        return f"{self.id_cliente};{self.data_criacao};{self.carrinho_produtos}"
+
+def calcular_preco_subtotal(quantidade, preco_unitario):
+    subtotal = quantidade * preco_unitario
+    return subtotal
+
+def calcular_desconto(quantidade_comprada, quantidade_minima, preco_unitario, id_desconto, percentual_desconto):
+    if id_desconto != None and quantidade_comprada > quantidade_minima:
+        desconto = (quantidade_comprada - quantidade_minima) * preco_unitario * percentual_desconto
+        return desconto
+    return 0
+
+def calcular_preco_total(subtotal, desconto):
+    total = subtotal - desconto
+    return total
+
+class Item_Carrinho_Calculado():
+    '''Classe que representa um item do carrinho com ID do produto, nome, quantidade, preço unitário, ID do desconto e quantidade mínima para desconto.'''
+
+    def __init__(self, id_produto, nome, quantidade, preco_unitario, id_desconto, percentual, quantidade_min_para_desconto):
+        self.id_produto = id_produto
+        self.nome = nome
+        self.quantidade = quantidade
+        self.preco_unitario = preco_unitario
+        self.id_desconto = id_desconto
+        self.quantidade_min_para_desconto = quantidade_min_para_desconto
+        self.preco_subtotal = calcular_preco_subtotal(self.quantidade, float(self.preco_unitario))
+        self.desconto_total = calcular_desconto(self.quantidade, self.quantidade_min_para_desconto, self.preco_unitario, self.id_desconto, percentual)
+        self.preco_total = calcular_preco_total(self.preco_subtotal, self.desconto_total)
+
+    def __str__(self):
+        return f"{self.id_produto};{self.nome};{self.quantidade};{self.preco_unitario};{self.id_desconto};{self.quantidade_min_para_desconto}"

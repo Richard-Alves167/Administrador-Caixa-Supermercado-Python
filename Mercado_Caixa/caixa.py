@@ -18,10 +18,10 @@ def emitir_nota_fiscal(atendimento):
     itens_produto = atendimento.carrinho_produtos
     itens_tabela = []
     for item in itens_produto:
-        itens_tabela.append([item[0], item[1], item[2], item[3], item[7], item[8], item[9]])
-        subtotal += item[7]
-        desconto += item[8]
-        total += item[9]
+        itens_tabela.append([contador, item.nome, item.quantidade, item.preco_unitario, item.preco_subtotal, item.desconto_total, item.preco_total])
+        subtotal += item.preco_subtotal
+        desconto += item.desconto_total
+        total += item.preco_total
         contador += 1
 
     print(f"\nCLiente {cliente}")
@@ -58,7 +58,7 @@ def emitir_nota_clientes_atendidos(lista_atendimentos):
     lista_clientes_separados = []
     for atendimento in lista_atendimentos:
         nome_cliente = f"Cliente {atendimento.id_cliente}"
-        total_cliente = sum([item[9] for item in atendimento.carrinho_produtos])
+        total_cliente = sum([item.preco_total for item in atendimento.carrinho_produtos])
         lista_clientes_separados.append([nome_cliente, total_cliente])
     total = sum([cliente[1] for cliente in lista_clientes_separados])
 

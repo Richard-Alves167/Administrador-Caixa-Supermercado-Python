@@ -2,23 +2,43 @@ from Common.util import *
 from Common.crud.produto import *
 from Common.crud.desconto import *
 from Common.menus import *
-from Mercado_Caixa.data.tabela import agrupar_itens_carrinho
+from Common.models import Item_Carrinho_Calculado
+import pandas as pd
 
-def calcular_preco_subtotal(quantidade, preco_unitario):
-    subtotal = quantidade * preco_unitario
-    return subtotal
+def agrupar_itens_carrinho(carrinho_produtos):
+    df = pd.DataFrame(carrinho_produtos, columns=["id_produto", "nome", "quantidade", "preco_unitario", "id_desconto", "quantidade_min_para_desconto"])
+    df_agrupado = df.groupby(["id_produto", "nome", "preco_unitario", "id_desconto", "quantidade_min_para_desconto"], as_index=False).agg({"quantidade": "sum"})
+    df_agrupado = df_agrupado.reindex(columns=["id_produto", "nome", "quantidade", "preco_unitario","id_desconto", "quantidade_min_para_desconto"])
+    carrinho_agrupado = df_agrupado.values.tolist()
+    return carrinho_agrupado
 
-def calcular_desconto(session, quantidade_comprada, quantidade_minima, preco_unitario, id_desconto):
-    if id_desconto != None and quantidade_comprada > quantidade_minima:
-        desconto = return_desconto(session, id_desconto)
-        percentual = desconto.percentual
-        desconto = (quantidade_comprada - quantidade_minima) * preco_unitario * percentual
-        return desconto, percentual
-    return 0, 0
+def selecionar_produto(session, dic_produto_estoque):
+    produto_comprado = None
+    produto_id = input_int_positivo("Digite o ID do produto a ser adicionado: ")
+    produto = return_produto(session, produto_id)
+    if produto:
+        quantidade = input_int_positivo("Quantidade: ")
+        if (dic_produto_estoque[produto_id] >= quantidade):
+            dic_produto_estoque[produto_id] -= quantidade
+            if dic_produto_estoque[produto_id] == 0: criar_log_falta_estoque(produto.id_produto, produto.nome)
+            produto_comprado = [produto.id_produto, produto.nome, quantidade, produto.preco, produto.id_desconto, produto.quantidade_min_para_desconto]
+        else:
+            print("Quantidade indisponível no estoque!")
+    else:
+        print("Erro: produto não cadastrado.")
+    return produto_comprado
 
-def calcular_preco_total(subtotal, desconto):
-    total = subtotal - desconto
-    return total
+def calcular_desconto_carrinho(session, carrinho_produtos):
+    produtos_calculo_total = []
+    for produto in carrinho_produtos:
+        produto_calculado = None
+        if produto[3] != None:
+            desconto = return_desconto(session, produto[4])
+            produto_calculado = Item_Carrinho_Calculado(produto[0], produto[1], produto[2], produto[3], produto[4], desconto.percentual, produto[5])
+        else:
+            produto_calculado = Item_Carrinho_Calculado(produto[0], produto[1], produto[2], produto[3], produto[4], 0, produto[5])
+        produtos_calculo_total.append(produto_calculado)
+    return produtos_calculo_total
 
 def adicionar_carrinho(session):
     dic_produto_estoque = return_produto_estoque(session)
@@ -35,23 +55,5 @@ def adicionar_carrinho(session):
             case _:
                 print("Opção inválida!")
     produtos_comprados_agrupados = agrupar_itens_carrinho(produtos_comprados)
-    return produtos_comprados_agrupados
-
-def selecionar_produto(session, dic_produto_estoque):
-    produto_comprado = None
-    produto_id = input_int_positivo("Digite o ID do produto a ser adicionado: ")
-    produto = return_produto(session, produto_id)
-    if produto:
-        quantidade = input_int_positivo("Quantidade: ")
-        if (dic_produto_estoque[produto_id] >= quantidade):
-            dic_produto_estoque[produto_id] -= quantidade
-            if dic_produto_estoque[produto_id] == 0: criar_log_falta_estoque(produto.id_produto, produto.nome)
-            preco_subtotal = calcular_preco_subtotal(quantidade, float(produto.preco))
-            desconto_total, percentual = calcular_desconto(session, quantidade, produto.quantidade_min_para_desconto, produto.preco, produto.id_desconto)
-            preco_total = calcular_preco_total(preco_subtotal, desconto_total)
-            produto_comprado = [produto.id_produto, produto.nome, quantidade, produto.preco, produto.id_desconto, produto.quantidade_min_para_desconto, percentual, preco_subtotal, desconto_total, preco_total]
-        else:
-            print("Quantidade indisponível no estoque!")
-    else:
-        print("Erro: produto não cadastrado.")
-    return produto_comprado
+    produtos_agrupados_calculados = calcular_desconto_carrinho(session, produtos_comprados_agrupados)
+    return produtos_agrupados_calculados
