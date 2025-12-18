@@ -36,12 +36,15 @@ def visualizar_cliente_compras(session):
     cliente_escolhido = input_int_positivo("Coloque o id do cliente em que deseja verificar as compras: ")
     cliente = return_cliente(session, cliente_escolhido)
     if cliente:
-        query = text("select c.nome as cliente, cp.id_compra, cp.data_hora as data_compra from cliente c inner join compra cp on c.id_cliente = cp.id_cliente where c.id_cliente = :id_cliente order by data_compra desc")
+        query = text("select c.nome as cliente, cp.id_compra, cp.data_hora as data_compra, sum(i.preco_unitario * i.quantidade) as compra_total from cliente c inner join compra cp on c.id_cliente = cp.id_cliente inner join item i on i.id_compra = cp.id_compra where c.id_cliente = :id_cliente group by cp.id_compra order by data_compra desc")
         df = pd.read_sql_query(query, conn, params={"id_cliente": cliente_escolhido})
         if df.empty:
             print("Nenhuma compra existente.")
         else:
+            soma_total_compras = df['compra_total'].sum()
             print(df.to_string(index=False))
+            print(f"\nValor total gasto pelo cliente {cliente_escolhido}: {soma_total_compras}\n")
+            visualizar_cliente_compra(session)
 
 def visualizar_cliente_compra(session):
     conn = session.connection()
