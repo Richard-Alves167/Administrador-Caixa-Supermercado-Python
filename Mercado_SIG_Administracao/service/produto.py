@@ -1,6 +1,6 @@
 from Common.crud.produto import *
 from Common.menus import *
-from Mercado_SIG_Administracao.crud.fornecedor_produto import insert_produto_fornecedor, delete_produto_fornecedor
+from Mercado_SIG_Administracao.crud.fornecedor_produto import insert_produto_fornecedor, return_fornecedores_produto, delete_produto_fornecedor
 from sqlalchemy import text
 import pandas as pd
 
@@ -14,9 +14,14 @@ def visualizar_produtos(session):
 def adicionar_produto(session):
     produto = create_produto()
     insert_produto(session, produto)
-    print("Adicionar fornecedores:")
-    insert_produto_fornecedor(session, produto.id_produto)
-    escolher_opcao_atualizar_produto_fornecedor(session, produto.id_produto)
+    print("Adicionar fornecedor: ")
+    while(True):
+        fornecedores = return_fornecedores_produto(session, produto.id_produto)
+        if (len(fornecedores) == 0):
+            print("\nO produto necessita de pelo menos 1 fornecedor.")
+            insert_produto_fornecedor(session, produto.id_produto)
+        else:
+            break
 
 def modificar_produto(session):
     produto_id = input("Digite o ID do produto a ser modificado: ")

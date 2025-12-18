@@ -6,7 +6,7 @@ def create_item(compra, produto_carrinho):
     '''
     Cria um novo item de uma item.
      desconto do produto na hora da compra e quantidade minima para ter desconto na hora da compra.
-    ID | ID da compra | ID do produto | quantidade comprada | preço do produto na hora da compra.
+    ID | ID da compra | ID do produto | quantidade comprada | preço do produto na hora da compra | desconto do produto na hora da compra | quantidade minima para ter desconto na hora da compra.
     '''
 
     item = Item(compra.id_compra, produto_carrinho[0], produto_carrinho[2], produto_carrinho[3], produto_carrinho[4], produto_carrinho[5])
