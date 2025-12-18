@@ -45,7 +45,7 @@ def visualizar_fornecedores_com_produtos(session):
     if df.empty:
         print("Todos os fornecedores não distribuem nenhum produto.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Fornecedores com produtos")
 
 def visualizar_fornecedores_sem_produtos(session):
     conn = session.connection()
@@ -54,7 +54,7 @@ def visualizar_fornecedores_sem_produtos(session):
     if df.empty:
         print("Todos os fornecedores distribuem algum produto.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Fornecedores sem produtos")
 
 def visualizar_produtos_fornecedor(session):
     fornecedor_id = input_int_positivo("Coloque o id do fornecedor em que deseja verificar os produtos: ")
@@ -66,6 +66,6 @@ def visualizar_produtos_fornecedor(session):
         if df.empty:
             print("Fornecedor sem produtos.")
         else:
-            print(df.to_string(index=False))
+            visualizar_dataframe_tabulate_fancy_grid(df, "Produtos de um fornecedor")
     else:
         print("ID de fornecedor não cadastrado.")

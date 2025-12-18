@@ -88,7 +88,7 @@ def visualizar_produtos_mais_vendidos(session):
     if df.empty:
         print("Nenhuma compra existente.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Produtos mais vendidos")
 
 def visualizar_produtos_menos_vendidos(session):
     conn = session.connection()
@@ -97,7 +97,7 @@ def visualizar_produtos_menos_vendidos(session):
     if df.empty:
         print("Nenhuma compra existente.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Produtos menos vendidos")
 
 def visualizar_produtos_pouco_estoque(session):
     conn = session.connection()
@@ -107,7 +107,7 @@ def visualizar_produtos_pouco_estoque(session):
     if df.empty:
         print("Nenhuma compra existente.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Produtos com pouco estoque")
 
 def visualizar_produto_fornecedores(session):
     produto_id = input_int_positivo("Coloque o id do produto em que deseja verificar os fornecedores: ")
@@ -119,7 +119,7 @@ def visualizar_produto_fornecedores(session):
         if df.empty:
             print("Produto sem fornecedor.")
         else:
-            print(df.to_string(index=False))
+            visualizar_dataframe_tabulate_fancy_grid(df, "Fornecedores de um produto")
     else:
         print("ID de produto não cadastrado.")
 
@@ -130,4 +130,4 @@ def visualizar_produtos_sem_fornecedores(session):
     if df.empty:
         print("Todos os produtos tem fornecedor.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Produtos sem fornecedores")

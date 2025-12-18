@@ -2,6 +2,7 @@ from Common.crud.cliente import *
 from Common.crud.compra import *
 from Common.menus import *
 from Common.models import *
+from Common.util import visualizar_dataframe_tabulate_fancy_grid
 from Mercado_Caixa.caixa import emitir_nota_fiscal
 from sqlalchemy import text
 import pandas as pd
@@ -20,7 +21,7 @@ def visualizar_clientes_com_compras(session):
     if df.empty:
         print("Nenhum cliente com compras.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Clientes com compras")
 
 def visualizar_clientes_sem_compras(session):
     conn = session.connection()
@@ -29,7 +30,7 @@ def visualizar_clientes_sem_compras(session):
     if df.empty:
         print("Todos clientes cadastrados possuem compra.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Clientes sem compras")
 
 def visualizar_cliente_compras(session):
     conn = session.connection()
@@ -41,9 +42,9 @@ def visualizar_cliente_compras(session):
         if df.empty:
             print("Nenhuma compra existente.")
         else:
+            visualizar_dataframe_tabulate_fancy_grid(df, "Compras de um cliente")
             soma_total_compras = df['compra_total'].sum()
-            print(df.to_string(index=False))
-            print(f"\nValor total gasto pelo cliente {cliente_escolhido}: {soma_total_compras}\n")
+            visualizar_total_abaixo_dataframe_tabulate_fancy_grid(df, cliente.nome, soma_total_compras)
             visualizar_cliente_compra(session)
 
 def visualizar_cliente_compra(session):
@@ -73,7 +74,7 @@ def visualizar_clientes_mais_compras(session):
     if df.empty:
         print("Clientes sem compras.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Clientes com mais compras")
 
 def visualizar_clientes_mais_gasto(session):
     conn = session.connection()
@@ -82,4 +83,4 @@ def visualizar_clientes_mais_gasto(session):
     if df.empty:
         print("Clientes sem compras.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Clientes com mais gasto no mercado")

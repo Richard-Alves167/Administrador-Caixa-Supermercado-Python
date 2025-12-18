@@ -21,7 +21,7 @@ def visualizar_desconto_com_produtos(session):
     if df.empty:
         print("Todos os descontos não tem nenhum produto.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Descontos com produtos")
 
 def visualizar_desconto_sem_produtos(session):
     conn = session.connection()
@@ -30,7 +30,7 @@ def visualizar_desconto_sem_produtos(session):
     if df.empty:
         print("Todos os descontos tem algum produto.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Descontos sem produtos")
 
 def visualizar_produtos_desconto(session):
     conn = session.connection()
@@ -40,4 +40,4 @@ def visualizar_produtos_desconto(session):
     if df.empty:
         print("Nenhum produto nesse desconto.")
     else:
-        print(df.to_string(index=False))
+        visualizar_dataframe_tabulate_fancy_grid(df, "Produtos com desconto")
