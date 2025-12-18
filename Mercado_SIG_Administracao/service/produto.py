@@ -60,9 +60,26 @@ def escolher_opcao_atualizar_produto_fornecedor(session, produto_id):
             case _:
                 print("Opção inválida!")
 
+def verificar_produto_sem_vendas(session, id_produto):
+    conn = session.connection()
+    query = "select p.id_produto from produto p left join item i on p.id_produto = i.id_produto where i.id_produto is null"
+    df = pd.read_sql_query(query, conn)
+    lista_id_produto = df["id_produto"].tolist()
+    if id_produto in lista_id_produto:
+        return True
+    else:
+        return False
+
 def deletar_produto(session):
-    produto_id = input("Digite o ID do produto a ser deletado: ")
-    delete_produto(session, produto_id)
+    produto_id = input_int_positivo("Digite o ID do produto a ser deletado: ")
+    produto = return_produto(session, produto_id)
+    if produto:
+        if verificar_produto_sem_vendas(session, produto_id):
+            delete_produto(session, produto_id)
+        else:
+            print("O produto já foi vendido e não pode ser excluído do Banco de Dados.")
+    else:
+        print("Produto não cadastrado")
 
 def visualizar_produtos_mais_vendidos(session):
     conn = session.connection()
