@@ -52,18 +52,17 @@ def visualizar_cliente_compra(session):
     compra_escolhida = input_int_positivo("Coloque o id da compra em que deseja verificar a nota fiscal: ")
     compra = return_compra(session, compra_escolhida)
     if compra:
-        #"id_produto", "nome", "quantidade", "preco_unitario","id_desconto", "quantidade_min_para_desconto", "percentual", "preco_subtotal", "desconto_total","preco_total"
-        query = text("select p.id_produto, p.nome, i.quantidade, i.preco_unitario, i.id_desconto, i.quantidade_min_para_desconto, d.percentual, (i.quantidade * i.preco_unitario) as preco_subtotal, ((i.quantidade - i.quantidade_min_para_desconto) * i.preco_unitario * d.percentual) as desconto_total, (i.quantidade * i.preco_unitario) - (i.quantidade - i.quantidade_min_para_desconto) * i.preco_unitario as preco_total from item i inner join produto p on i.id_produto = p.id_produto inner join desconto d on i.id_desconto = d.id_desconto where i.id_compra = :id_compra")
+        query = text("select p.id_produto, p.nome, i.quantidade, i.preco_unitario, i.id_desconto, d.percentual, i.quantidade_min_para_desconto from item i inner join produto p on i.id_produto = p.id_produto inner join desconto d on i.id_desconto = d.id_desconto where i.id_compra = :id_compra")
         df = pd.read_sql_query(query, conn, params={"id_compra": compra_escolhida})
         if df.empty:
             print("Nenhum item existente para essa compra.")
         else:
             lista_produtos = []
             for index, item in df.iterrows():
-                if item['quantidade_min_para_desconto'] >= item['quantidade']:
-                    item['preco_total'] += item['desconto_total'] 
-                    item['desconto_total'] = 0
-                lista_produtos.append([item['id_produto'], item['nome'], item['quantidade'], item['preco_unitario'], item['id_desconto'], item['quantidade_min_para_desconto'], item['percentual'], item['preco_subtotal'], item['desconto_total'], item['preco_total']])
+                if item['id_desconto'] == None:
+                    item['percentual'] = 0
+                item_calculado = Item_Carrinho_Calculado(item['id_produto'], item['nome'], item['quantidade'], item['preco_unitario'], item['id_desconto'], item['percentual'], item['quantidade_min_para_desconto'])
+                lista_produtos.append(item_calculado)
             atendimento = Atendimento(compra.id_cliente, compra.data_hora, lista_produtos)
             emitir_nota_fiscal(atendimento)
 
